@@ -39,7 +39,7 @@ let camYDir = 0
 let fov = 135
 let renderDist = 500;
 let epsilon = 0.01
-let resolution = 5
+let resolution = 20
 let focalLength = (WIDTH/2)/Math.tan(toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 
 const misc = new Misc()
@@ -74,6 +74,9 @@ function raymarchPixel(x,y) {
                 contactObject = o
             }
         }) // go through each object and find the distance to it. If the distance is less than the held distance, replace it. Also hold on to the object it hit, we need it later.
+        rx += xv*sdfDist
+        ry += yv*sdfDist
+        rz += zv*sdfDist
         rayLength += sdfDist
     }
 
@@ -90,6 +93,7 @@ function raymarchPixel(x,y) {
         // pb = misc.interpolate(pb,contactObject.b,(renderDist-rayLength)/rayLength)
         console.log("bonk")
     }
+
     // draw the pixel
     ctx.fillStyle = `rgb(${pr},${pg},${pb})`
     ctx.fillRect(x,y,resolution,resolution)
@@ -113,4 +117,8 @@ function render() {
 
     }
 }
+
+let oldTime = Date.now()
 render()
+let renderTime = Date.now() - oldTime
+console.log(`Finished rendering in ${renderTime} milliseconds`)
