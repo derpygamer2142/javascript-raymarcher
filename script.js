@@ -39,8 +39,10 @@ let camYDir = 0
 let fov = 135
 let renderDist = 500;
 let epsilon = 0.01
-let resolution = 3
+let resolution = 1
 let focalLength = (WIDTH/2)/Math.tan(toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
+
+let [br,bg,bb] = [7, 237, 218]
 
 const misc = new Misc()
 
@@ -55,7 +57,7 @@ function raymarchPixel(x,y) {
     let xv = toOriginX(x)
     let yv = toOriginY(y)
     let zv = focalLength
-    let [pr,pg,pb] = [7, 237, 218]
+    let [pr,pg,pb] = [br,bg,bb]
 
     let contactObject = null
 
@@ -93,25 +95,29 @@ function raymarchPixel(x,y) {
         pb = misc.interpolate(pb,contactObject.b,(renderDist-rayLength)/rayLength)
     }
 
-    // draw the pixel
-    ctx.fillStyle = `rgb(${pr},${pg},${pb})`
-    ctx.fillRect(x,y,resolution,resolution)
+    // return rgb values
+    return [pr,pg,pb]
+    
 }
 
 
 
-
+let rgb = []
 
 function render() {
-    ctx.fillStyle = "grey"
+    ctx.fillStyle = `rgb(${br},${bg},${bb})`
     ctx.fillRect(0,0,WIDTH,HEIGHT)
     for (let y = 0; y < HEIGHT; y += resolution) {
         for (let x = 0; x < WIDTH; x += resolution) {
             //console.log(x,y)
             //ctx.fillStyle = "black"
             //ctx.fillRect(x,y,5,5)
-            raymarchPixel(x,y)
-
+            const prgb = raymarchPixel(x,y)
+            //rgb.push(prgb)
+        
+            ctx.fillStyle = `rgb(${prgb[0]},${prgb[1]},${prgb[2]})`
+            ctx.fillRect(x,y,resolution,resolution)
+            
         }
 
     }
