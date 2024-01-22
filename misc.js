@@ -4,7 +4,7 @@ export default class Misc {
     }
 
     normalize(x,y,z) {
-        let magnitude = ((x*x) + (y*y) + (z*z))
+        let magnitude = Math.sqrt((x*x) + (y*y) + (z*z))
         return [
             x/magnitude,
             y/magnitude,

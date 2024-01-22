@@ -39,7 +39,7 @@ let camYDir = 0
 let fov = 135
 let renderDist = 500;
 let epsilon = 0.01
-let resolution = 20
+let resolution = 3
 let focalLength = (WIDTH/2)/Math.tan(toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 
 const misc = new Misc()
@@ -85,13 +85,12 @@ function raymarchPixel(x,y) {
         //console.log(rayLength)
     }
     else {
-        pr = contactObject.r
-        pg = contactObject.g
-        pb = contactObject.b
-        // pr = misc.interpolate(pr,contactObject.r,(renderDist-rayLength)/rayLength) // fade the pixel's color from the background color to the object's color
-        // pg = misc.interpolate(pg,contactObject.g,(renderDist-rayLength)/rayLength)
-        // pb = misc.interpolate(pb,contactObject.b,(renderDist-rayLength)/rayLength)
-        console.log("bonk")
+        // pr = contactObject.r
+        // pg = contactObject.g
+        // pb = contactObject.b
+        pr = misc.interpolate(pr,contactObject.r,(renderDist-rayLength)/rayLength) // fade the pixel's color from the background color to the object's color
+        pg = misc.interpolate(pg,contactObject.g,(renderDist-rayLength)/rayLength)
+        pb = misc.interpolate(pb,contactObject.b,(renderDist-rayLength)/rayLength)
     }
 
     // draw the pixel
