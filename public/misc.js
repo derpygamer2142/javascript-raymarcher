@@ -16,5 +16,12 @@ export default class Misc {
         return a + ((b-a) * amount)
     }
 
+    vectorBetween(x1,y1,z1,x2,y2,z2) {
+        return this.normalize(x1-x2,y1-y2,z1-z2)
+    }
+
+    dotProduct(a,b) {
+        return ((a[0]*b[0]) + (a[1] * b[1]) + (a[2] * b[2]))
+    }
 
 }

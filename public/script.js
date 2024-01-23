@@ -1,5 +1,6 @@
 import Misc from "./misc.js"
 import Sphere from "./sphere.js"
+import Input from "./input.js";
 
 const canv = document.getElementById("screen");
 const ctx = canv.getContext("2d");
@@ -29,7 +30,7 @@ function toDeg(rad) {
 }
 
 let objects = [];
-objects.push(new Sphere(0,0,45,15,255,0,0,0.5,175))
+objects.push(new Sphere(0,0,45,35,255,0,0,0.5,175))
 console.log(objects)
 let camX = 0
 let camY = 0
@@ -39,13 +40,13 @@ let camYDir = 0
 let fov = 135
 let renderDist = 500;
 let epsilon = 0.01
-let resolution = 1
+let resolution = 8
 let focalLength = (WIDTH/2)/Math.tan(toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 
 let [br,bg,bb] = [7, 237, 218]
 
 const misc = new Misc()
-
+const input = new Input()
 
 
 function raymarchPixel(x,y) {
@@ -90,9 +91,20 @@ function raymarchPixel(x,y) {
         // pr = contactObject.r
         // pg = contactObject.g
         // pb = contactObject.b
-        pr = misc.interpolate(pr,contactObject.r,(renderDist-rayLength)/rayLength) // fade the pixel's color from the background color to the object's color
-        pg = misc.interpolate(pg,contactObject.g,(renderDist-rayLength)/rayLength)
-        pb = misc.interpolate(pb,contactObject.b,(renderDist-rayLength)/rayLength)
+        let [r,g,b] = [contactObject.r,contactObject.g,contactObject.b]
+        let v = contactObject.vectorTo(rx,ry,rz)
+        let lightingVal = misc.dotProduct(v,misc.normalize(1,1,-1)) 
+        lightingVal *= 45
+        r += lightingVal
+        b += lightingVal
+        b += lightingVal
+        //if (lightingVal > 0) {console.log(lightingVal)}
+        // pr = misc.interpolate(r,br,rayLength/renderDist) // fade the pixel's color from the background color to the object's color
+        // pg = misc.interpolate(g,bg,rayLength/renderDist)
+        // pb = misc.interpolate(b,bb,rayLength/renderDist)
+        pr = r
+        pg = g
+        pb = b
     }
 
     // return rgb values
@@ -105,6 +117,7 @@ function raymarchPixel(x,y) {
 let rgb = []
 
 function render() {
+    let oldTime = Date.now()
     ctx.fillStyle = `rgb(${br},${bg},${bb})`
     ctx.fillRect(0,0,WIDTH,HEIGHT)
     for (let y = 0; y < HEIGHT; y += resolution) {
@@ -121,9 +134,21 @@ function render() {
         }
 
     }
+
+    let renderTime = Date.now() - oldTime
+    console.log(`Finished rendering in ${renderTime} milliseconds`)
 }
 
-let oldTime = Date.now()
-render()
-let renderTime = Date.now() - oldTime
-console.log(`Finished rendering in ${renderTime} milliseconds`)
+function renderAndUpdate() {
+    render()
+    camX += + input.d
+    camX -= + input.a
+    camZ += + input.w
+    camZ -= + input.s
+    if (input.w) {
+        console.log(camZ)
+    }
+}
+
+
+setInterval(renderAndUpdate,85)
