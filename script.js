@@ -1,6 +1,6 @@
 import Misc from "./misc.js"
 import Sphere from "./sphere.js"
-// const gpu = new GPU();
+import gpu from "./main.js"
 
 const canv = document.getElementById("screen");
 const ctx = canv.getContext("2d");
