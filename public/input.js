@@ -5,6 +5,8 @@ export default class Input {
         this.a = false;
         this.s = false;
         this.d = false;
+        this.e = false
+        this.q = false
         this.initInput();
         this.ArrowUp = false
         this.ArrowDown = false
