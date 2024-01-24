@@ -113,4 +113,15 @@ export default class Misc {
     subVectors(a,b) {
         return [a[0]-b[0],a[1]-b[1],a[2]-b[2]]
     }
+
+    oneLineIf(cond,a,b) {
+        if (cond) {
+            return a
+        }
+        return b
+    }
+
+    constrain(n,a,b) {
+        return Math.min(b, Math.max(a, n))
+    }
 }

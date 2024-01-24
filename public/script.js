@@ -67,8 +67,8 @@ const input = new Input()
 
 let objects = [];
 //objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
-//objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
-objects.push(new Triangle(-45,0,45,0,65,45,45,0,45,128,128,128,0.5,175,epsilon))
+objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
+//objects.push(new Triangle(-45,0,105,0,65,105,45,0,105,128,128,128,0.5,175,epsilon))
 
 let camX = 0
 let camY = 0
@@ -79,8 +79,6 @@ let camYDir = 0
 let focalLength = (WIDTH/2)/Math.tan(misc.toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 let deltaTime = 0
 let heldTime = Date.now()
-
-
 
 
 
@@ -111,7 +109,7 @@ function raymarchPixel(x,y) {
         sdfDist = Infinity
         objects.forEach(o => {
             let heldDist = o.dist(rx,ry,rz)
-            console.log(heldDist)
+            //console.log(heldDist)
             if (heldDist < sdfDist) {
                 sdfDist = heldDist
                 contactObject = o
@@ -201,7 +199,7 @@ async function renderAndUpdate() {
     let renderTime = Date.now() - oldTime
     ctx.fillStyle = "black"
     ctx.font = "30px Comic Sans MS"
-    printLines([`Rendered in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`],0,HEIGHT*0.98,30)
+    //printLines([`Rendered in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)
