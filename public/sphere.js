@@ -1,4 +1,5 @@
 import Misc from "./misc.js"
+
 export default class Sphere {
     constructor(x,y,z,rad,r,g,b,reflectivity,brightness) {
         this.x = x;
@@ -20,7 +21,8 @@ export default class Sphere {
         return (this.misc.dist(x,y,z,this.x,this.y,this.z) - this.rad) // the distance between a point and a given sphere is the distance from the point to the center, minus the radius
     }
 
-    vectorTo(x,y,z) {
-        return this.misc.vectorBetween(x,y,z,this.x,this.y,this.z)
+    normalTo(x,y,z) {
+        let v = this.misc.vectorBetween(this.x,this.y,this.z,x,y,z)
+        return this.misc.normalize(v[0],v[1],v[2])
     }
 }
