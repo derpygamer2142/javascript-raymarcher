@@ -1,7 +1,9 @@
 import Misc from "./misc.js"
 import Sphere from "./sphere.js"
 import Box from "./box.js"
+import Triangle from "./triangle.js";
 import Input from "./input.js";
+
 const canv = document.getElementById("screen");
 const ctx = canv.getContext("2d");
 
@@ -64,9 +66,9 @@ const misc = new Misc()
 const input = new Input()
 
 let objects = [];
-objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
+//objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
 //objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
-
+objects.push(new Triangle(-45,0,45,0,65,45,45,0,45,128,128,128,0.5,175,epsilon))
 
 let camX = 0
 let camY = 0
@@ -109,6 +111,7 @@ function raymarchPixel(x,y) {
         sdfDist = Infinity
         objects.forEach(o => {
             let heldDist = o.dist(rx,ry,rz)
+            console.log(heldDist)
             if (heldDist < sdfDist) {
                 sdfDist = heldDist
                 contactObject = o

@@ -59,4 +59,58 @@ export default class Misc {
             z*s
         ]
     }
+
+    sign(v,c) {
+        let i = 0
+
+        switch (c) {
+            case "x":
+                i = 0
+            
+            case "y":
+                i = 1
+            
+            case "z":
+                i = 2
+
+        }
+
+        return (v[i] / Math.abs(v[i]))
+
+    }
+
+    cross(a,b) {
+        return [
+            (a[1]*b[2]) - (b[1]*a[2]),
+            (a[2]*b[0]) - (b[2]*a[0]),
+            (a[0]*b[1]) - (b[0]*a[1])
+        ]
+    }
+
+    dot2(v) {
+        return this.dotProduct(v,v)
+    }
+
+    min(a,b) {
+        if (a<b){
+            return a
+        }
+        return b
+    }
+
+    max(a,b) {
+        if (a<b){
+            return b
+        }
+        return a
+    }
+    
+
+    addVectors(a,b) {
+        return [a[0]+b[0],a[1]+b[1],a[2]+b[2]]
+    }
+
+    subVectors(a,b) {
+        return [a[0]-b[0],a[1]-b[1],a[2]-b[2]]
+    }
 }
