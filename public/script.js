@@ -105,7 +105,7 @@ function raymarchPixel(x,y) {
         let lightingVal = misc.dotProduct(v,misc.normalize(1,1,-1)) 
         lightingVal *= 25
         r += lightingVal
-        b += lightingVal
+        g += lightingVal
         b += lightingVal
         //if (lightingVal > 0) {console.log(lightingVal)}
         // pr = misc.interpolate(r,br,rayLength/renderDist) // fade the pixel's color from the background color to the object's color
