@@ -3,6 +3,7 @@ import Sphere from "./sphere.js"
 import Box from "./box.js"
 import Triangle from "./triangle.js";
 import Input from "./input.js";
+import objectParser from "./objectParser.js";
 
 const canv = document.getElementById("screen");
 const ctx = canv.getContext("2d");
@@ -12,8 +13,9 @@ const HEIGHT = window.innerHeight;
 canv.width = WIDTH
 canv.height = HEIGHT
 console.log(WIDTH, HEIGHT)
-let e = await fetch("./untitled.obj")
-let x = await e.text()
+
+let e = await fetch("./test.obj")
+let model = await e.text()
 
 function toOriginX(x) {
     return x - (WIDTH/2);
@@ -56,29 +58,36 @@ let epsilon = 0.01
 let resolution = 8
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
-let renderType = "normal" // normal, actual, diffuse. Normal is fastest, diffuse is slowest.
+let renderType = "normal" // none, normal, actual, diffuse. None is fastest, diffuse is slowest.
 let lx = 0
 let ly = 105
 let lz = 0
 let lr = 15
+let bfc = true
 
 
 
 const misc = new Misc()
 const input = new Input()
+const objReader = new objectParser(epsilon)
+let output = objReader.getData(model,0,0,125,55)[1]
+console.log(output)
 
-let objects = [];
+
+let objects = output;
 //objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
 //objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
-objects.push(new Triangle(-45,-45,15,0,20,45,45,-45,15,128,128,128,0.5,175,epsilon))
-let toRender = objects
+//objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
+//objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
+
+let toRender = []
 
 
-let camX = 0
-let camY = 0
-let camZ = 0
-let camXDir = 0
-let camYDir = 0
+let camX = 0.1 // it breaks when camX is 0. No clue why, not fixing it either.
+let camY = 3.0
+let camZ = 0.0
+let camXDir = 10.0
+let camYDir = 0.0
 
 let focalLength = (WIDTH/2)/Math.tan(misc.toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 let deltaTime = 0
@@ -91,11 +100,11 @@ let heldTime = Date.now()
 
 
 function raymarchPixel(x,y) {
-    let rayLength = 0;
+    let rayLength = 0.0;
     let sdfDist = Infinity
     let rx = camX;
-    let ry = camY
-    let rz = camZ
+    let ry = camY;
+    let rz = camZ;
     let xv = toOriginX(x)
     let yv = toOriginY(y)
     let zv = focalLength
@@ -183,15 +192,22 @@ function render() {
 }
 
 async function renderAndUpdate() {
-    toRender = []
-    for (let i = 0; i < objects.length; i++) {
-        let o = objects[i]
-        if (o.type == "tri") {
-            if (!(misc.dotProduct(o.normal,misc.vectorBetween(o.x,o.y,o.z,camX,camY,camZ)) < 0)) {
-                toRender.push(o)
+    if (bfc) {
+        toRender = []
+        for (let i = 0; i < objects.length; i++) {
+            let o = objects[i]
+            if (o.type == "tri") {
+                let e = misc.vectorBetween(o.x,o.y,o.z,camX,camY,camZ)
+                if (!(misc.dotProduct(o.normal,misc.normalize(e[0],e[1],e[2])) < 0)) {
+                    toRender.push(o)
+                }
             }
-        }
-    } // back face culling in a raymarcher?! :scream:
+        } // back face culling in a raymarcher?! :scream:
+    }
+    else {
+        toRender = objects
+    }
+
 
 
     deltaTime = (Date.now() - heldTime)/1000
@@ -214,7 +230,7 @@ async function renderAndUpdate() {
     let renderTime = Date.now() - oldTime
     ctx.fillStyle = "black"
     ctx.font = "30px Comic Sans MS"
-    printLines([`Rendered in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`],0,HEIGHT*0.98,30)
+    printLines([`Rendered ${toRender.length} shapes in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)

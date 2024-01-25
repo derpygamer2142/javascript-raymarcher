@@ -1,15 +1,14 @@
 import Misc from "./misc.js"
 
 export default class Triangle {
-    constructor(x1,y1,z1,x2,y2,z2,x3,y3,z3,r,g,b,reflectivity,brightness, epsilon, normal=null) {
+    constructor(c1,c2,c3,r,g,b,reflectivity,brightness, epsilon, normal=null) {
         // that's a lot of stuff
-        this.a = [x1,y1,z1]
-        this.b2 = [x2,y2,z2]
-        this.c = [x3,y3,z3]
-
-        this.x = (x1+x2+x3)/3
-        this.y = (y1+y2+y3)/3
-        this.z = (z1+z2+z3)/3
+        this.a = c1
+        this.b2 = c2
+        this.c = c3
+        this.x = (c1[0]+c2[0]+c3[0])/3.0
+        this.y = (c1[1]+c2[1]+c3[1])/3.0
+        this.z = (c1[2]+c2[2]+c3[2])/3.0
 
         this.r = r
         this.g = g
@@ -26,11 +25,8 @@ export default class Triangle {
         if (normal == null) {
             let u = this.misc.subVectors(this.b2,this.a)
             let v = this.misc.subVectors(this.c,this.a)
-            this.normal = [
-                (u[1] * v[2]) - (u[2] * v[1]),
-                (u[2] * v[0]) - (u[0] * v[2]),
-                (u[0] * v[1]) - (u[1] * v[0])
-            ]
+            let e = this.misc.cross(u,v)
+            this.normal = this.misc.normalize(e[0],e[1],e[2])
         }
         else {
             this.normal = normal

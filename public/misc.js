@@ -6,7 +6,7 @@ export default class Misc {
     normalize(x,y,z) {
         let magnitude = Math.sqrt((x*x) + (y*y) + (z*z))
         if (magnitude == 0) {
-            return [0,0,0]
+            return [0.0,0.0,0.0]
         }
         return [
             x/magnitude,
