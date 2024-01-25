@@ -52,30 +52,31 @@ export default class Misc {
         return [xv,yv,zv]
     }
 
-    multVector(x,y,z,s) {
+    multVector(v,s) {
         return [
-            x*s,
-            y*s,
-            z*s
+            v[0]*s,
+            v[1]*s,
+            v[2]*s
         ]
     }
 
-    sign(v,c) {
-        let i = 0
+    sign(v) {
+        // let i = 0
 
-        switch (c) {
-            case "x":
-                i = 0
+        // // switch (c) {
+        // //     case "x":
+        // //         i = 0
             
-            case "y":
-                i = 1
+        // //     case "y":
+        // //         i = 1
             
-            case "z":
-                i = 2
+        // //     case "z":
+        // //         i = 2
 
-        }
+        // // }
 
-        return (v[i] / Math.abs(v[i]))
+        // return (v[i] / Math.abs(v[i]))
+        return (v/Math.abs(v))
 
     }
 

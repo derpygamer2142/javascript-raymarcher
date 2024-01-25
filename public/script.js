@@ -67,8 +67,9 @@ const input = new Input()
 
 let objects = [];
 //objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
-objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
-//objects.push(new Triangle(-45,0,105,0,65,105,45,0,105,128,128,128,0.5,175,epsilon))
+//objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
+objects.push(new Triangle(-45,-45,15,0,20,15,45,-45,15,128,128,128,0.5,175,epsilon))
+
 
 let camX = 0
 let camY = 0
@@ -185,11 +186,11 @@ async function renderAndUpdate() {
     render()
     let heldv = misc.normalize((+ input.d) - (+ input.a),0,(+ input.w) - (+ input.s))
     heldv = misc.rotateVector([heldv[0],heldv[1],heldv[2]],camXDir,camYDir) // convert the wasd input into a vector so it can be easily rotated
-    heldv = misc.multVector(heldv[0],heldv[1],heldv[2],deltaTime*speed) // multiply the vector by deltatime
+    heldv = misc.multVector(heldv,deltaTime*speed) // multiply the vector by deltatime
     camX += heldv[0]
     camY += ((+ input.q) - (+ input.e)) * deltaTime*speed
     camZ += heldv[2] // apply movement
-    camXDir -= (+ input.ArrowUp) * deltaTime*speed*2 // for some stupid reason the x and y rotation axises(axices?) are flipped
+    camXDir -= (+ input.ArrowUp) * deltaTime*speed*2 // for some stupid reason the x and y rotation axises(axices? axes?) are flipped
     camXDir += (+ input.ArrowDown) * deltaTime*speed*2
     camYDir += (+ input.ArrowRight) * deltaTime*speed*2
     camYDir -= (+ input.ArrowLeft) * deltaTime*speed*2
@@ -199,7 +200,7 @@ async function renderAndUpdate() {
     let renderTime = Date.now() - oldTime
     ctx.fillStyle = "black"
     ctx.font = "30px Comic Sans MS"
-    //printLines([`Rendered in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`],0,HEIGHT*0.98,30)
+    printLines([`Rendered in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)
