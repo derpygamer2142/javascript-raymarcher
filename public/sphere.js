@@ -15,6 +15,7 @@ export default class Sphere {
         this.reflectivity = reflectivity;
         this.brightness = brightness;
         this.misc = new Misc()
+        this.type = "sphere"
     }
 
     dist(x,y,z) {

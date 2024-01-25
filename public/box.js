@@ -18,6 +18,7 @@ export default class Box {
 
         this.misc = new Misc()
         this.epsilon = epsilon
+        this.type = "box"
     }
 
     dist(x,y,z) {

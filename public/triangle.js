@@ -20,6 +20,18 @@ export default class Triangle {
         this.misc = new Misc()
         this.epsilon = epsilon
 
+        this.type = "tri"
+
+        // normal calculations. This is slightly faster than calculating when culling afaik. https://www.khronos.org/opengl/wiki/Calculating_a_Surface_Normal
+        let u = this.misc.subVectors(this.b2,this.a)
+        let v = this.misc.subVectors(this.c,this.a)
+        this.normal = [
+            (u[1] * v[2]) - (u[2] * v[1]),
+            (u[2] * v[0]) - (u[0] * v[2]),
+            (u[0] * v[1]) - (u[1] * v[0])
+        ]
+
+
         // dist stuff for later use. This might be faster than calculating on the spot, but if js parses the json on each call it's a lot slower
 
         this.ba = this.misc.subVectors(this.b2,this.a)

@@ -68,7 +68,8 @@ const input = new Input()
 let objects = [];
 //objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
 //objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
-objects.push(new Triangle(-45,-45,15,0,20,15,45,-45,15,128,128,128,0.5,175,epsilon))
+objects.push(new Triangle(-45,-45,15,0,20,45,45,-45,15,128,128,128,0.5,175,epsilon))
+let toRender = objects
 
 
 let camX = 0
@@ -108,7 +109,7 @@ function raymarchPixel(x,y) {
 
     while (sdfDist > epsilon && rayLength < renderDist) {
         sdfDist = Infinity
-        objects.forEach(o => {
+        toRender.forEach(o => {
             let heldDist = o.dist(rx,ry,rz)
             //console.log(heldDist)
             if (heldDist < sdfDist) {
@@ -180,6 +181,17 @@ function render() {
 }
 
 async function renderAndUpdate() {
+    toRender = []
+    for (let i = 0; i < objects.length; i++) {
+        let o = objects[i]
+        if (o.type == "tri") {
+            if (!(misc.dotProduct(o.normal,misc.vectorBetween(o.x,o.y,o.z,camX,camY,camZ)) < 0)) {
+                toRender.push(o)
+            }
+        }
+    } // back face culling in a raymarcher?! :scream:
+
+
     deltaTime = (Date.now() - heldTime)/1000
     heldTime = Date.now()
     let oldTime = Date.now()
