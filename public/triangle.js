@@ -26,6 +26,15 @@ export default class Triangle {
         this.cb = this.misc.subVectors(this.c,this.b2)
         this.ac = this.misc.subVectors(this.a,this.c)
         this.nor = this.misc.cross(this.ba,this.ac)
+
+        this.acdt = this.misc.dot2(this.ac)
+        this.cbdt = this.misc.dot2(this.cb)
+        this.badt = this.misc.dot2(this.ba)
+        this.nordt = this.misc.dot2(this.nor)
+
+        this.cbanor = this.misc.cross(this.ba,this.nor)
+        this.ccbnor = this.misc.cross(this.cb,this.nor)
+        this.cacnor = this.misc.cross(this.ac,this.nor) // these look like total gibberish, but basically it stands for cross product ac nor
     }
 
     dist(x,y,z) {
@@ -37,16 +46,16 @@ export default class Triangle {
         //return this.misc.dist(x,y,z,this.x,this.y,this.z)
         let d = Math.sqrt(
             
-            (this.misc.sign(this.misc.dotProduct(this.misc.cross(this.ba,this.nor),pa)) +
-            this.misc.sign(this.misc.dotProduct(this.misc.cross(this.cb,this.nor),pb)) +
-            this.misc.sign(this.misc.dotProduct(this.misc.cross(this.ac,this.nor),pc))  <2)
+            (this.misc.sign(this.misc.dotProduct(this.cbanor,pa)) +
+            this.misc.sign(this.misc.dotProduct(this.ccbnor,pb)) +
+            this.misc.sign(this.misc.dotProduct(this.cacnor,pc))  <2)
             ?
             this.misc.min( this.misc.min(
-            this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.ba,this.misc.constrain(this.misc.dotProduct(this.ba,pa)/this.misc.dot2(this.ba),0,1)),pa)),
-            this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.cb,this.misc.constrain(this.misc.dotProduct(this.cb,pb)/this.misc.dot2(this.cb),0,1)),pb)) ),
-            this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.ac,this.misc.constrain(this.misc.dotProduct(this.ac,pc)/this.misc.dot2(this.ac),0,1)),pc)) )
+            this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.ba,this.misc.constrain(this.misc.dotProduct(this.ba,pa)/this.badt,0,1)),pa)),
+            this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.cb,this.misc.constrain(this.misc.dotProduct(this.cb,pb)/this.cbdt,0,1)),pb)) ),
+            this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.ac,this.misc.constrain(this.misc.dotProduct(this.ac,pc)/this.acdt,0,1)),pc)) )
             :
-            this.misc.dotProduct(this.nor,pa)*this.misc.dotProduct(this.nor,pa)/this.misc.dot2(this.nor)
+            this.misc.dotProduct(this.nor,pa)*this.misc.dotProduct(this.nor,pa)/this.nordt
             
         )
         //console.log(d)
