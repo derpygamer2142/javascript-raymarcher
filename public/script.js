@@ -12,6 +12,8 @@ const HEIGHT = window.innerHeight;
 canv.width = WIDTH
 canv.height = HEIGHT
 console.log(WIDTH, HEIGHT)
+let e = await fetch("./untitled.obj")
+let x = await e.text()
 
 function toOriginX(x) {
     return x - (WIDTH/2);

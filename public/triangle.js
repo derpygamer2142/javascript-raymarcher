@@ -1,7 +1,7 @@
 import Misc from "./misc.js"
 
 export default class Triangle {
-    constructor(x1,y1,z1,x2,y2,z2,x3,y3,z3,r,g,b,reflectivity,brightness, epsilon) {
+    constructor(x1,y1,z1,x2,y2,z2,x3,y3,z3,r,g,b,reflectivity,brightness, epsilon, normal=null) {
         // that's a lot of stuff
         this.a = [x1,y1,z1]
         this.b2 = [x2,y2,z2]
@@ -23,13 +23,18 @@ export default class Triangle {
         this.type = "tri"
 
         // normal calculations. This is slightly faster than calculating when culling afaik. https://www.khronos.org/opengl/wiki/Calculating_a_Surface_Normal
-        let u = this.misc.subVectors(this.b2,this.a)
-        let v = this.misc.subVectors(this.c,this.a)
-        this.normal = [
-            (u[1] * v[2]) - (u[2] * v[1]),
-            (u[2] * v[0]) - (u[0] * v[2]),
-            (u[0] * v[1]) - (u[1] * v[0])
-        ]
+        if (normal == null) {
+            let u = this.misc.subVectors(this.b2,this.a)
+            let v = this.misc.subVectors(this.c,this.a)
+            this.normal = [
+                (u[1] * v[2]) - (u[2] * v[1]),
+                (u[2] * v[0]) - (u[0] * v[2]),
+                (u[0] * v[1]) - (u[1] * v[0])
+            ]
+        }
+        else {
+            this.normal = normal
+        }
 
 
         // dist stuff for later use. This might be faster than calculating on the spot, but if js parses the json on each call it's a lot slower
@@ -54,7 +59,6 @@ export default class Triangle {
         let pa = this.misc.subVectors([x,y,z],this.a)
         let pb = this.misc.subVectors([x,y,z],this.b2)
         let pc = this.misc.subVectors([x,y,z],this.c)
-        //console.log()
         //return this.misc.dist(x,y,z,this.x,this.y,this.z)
         let d = Math.sqrt(
             
@@ -68,9 +72,8 @@ export default class Triangle {
             this.misc.dot2(this.misc.subVectors(this.misc.multVector(this.ac,this.misc.constrain(this.misc.dotProduct(this.ac,pc)/this.acdt,0,1)),pc)) )
             :
             this.misc.dotProduct(this.nor,pa)*this.misc.dotProduct(this.nor,pa)/this.nordt
-            
         )
-        //console.log(d)
+        
         return d
     }
 
