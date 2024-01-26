@@ -27,11 +27,18 @@ export default class objectParser {
                     let newLine = []
                     ls.forEach(a => {
                         heldArg = a.split("/")
-                        newLine.push(v[a[0]-1]) // currently not worrying about vertex normals or texture uvs. Just care about the coords.
+                        newLine.push(v[heldArg[0]-1]) // currently not worrying about vertex normals or texture uvs. Just care about the coords.
                         // split each argument by / , then only keep the first part. This is the coordinate index. Add it to the new line, which will have all of the coordinates.
                     })
-                    f.push(new Triangle(newLine[0],newLine[1],newLine[2],128,128,128,0.5,175,this.epsilon))
+                    let t = new Triangle(newLine[0],newLine[1],newLine[2],128,128,128,0.5,175,this.epsilon)
+                    f.push(t)
+                    //console.log(newLine)
 
+                    break;
+                case "o":
+                    break;
+                default:
+                    //console.log(`ignoring line ${l}`)
                     break;
             }
         })

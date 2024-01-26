@@ -14,7 +14,7 @@ canv.width = WIDTH
 canv.height = HEIGHT
 console.log(WIDTH, HEIGHT)
 
-let e = await fetch("./test.obj")
+let e = await fetch("./suzanne.obj")
 let model = await e.text()
 
 function toOriginX(x) {
@@ -70,11 +70,11 @@ let bfc = true
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-let output = objReader.getData(model,0,0,125,55)[1]
+let output = objReader.getData(model,0,0,125,55)
 console.log(output)
 
 
-let objects = output;
+let objects = output[1];
 //objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
 //objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
@@ -213,9 +213,10 @@ async function renderAndUpdate() {
     deltaTime = (Date.now() - heldTime)/1000
     heldTime = Date.now()
     let oldTime = Date.now()
-    render()
+
     let heldv = misc.normalize((+ input.d) - (+ input.a),0,(+ input.w) - (+ input.s))
     heldv = misc.rotateVector([heldv[0],heldv[1],heldv[2]],camXDir,camYDir) // convert the wasd input into a vector so it can be easily rotated
+    heldv = misc.normalize(heldv[0],heldv[1],heldv[2])
     heldv = misc.multVector(heldv,deltaTime*speed) // multiply the vector by deltatime
     camX += heldv[0]
     camY += ((+ input.q) - (+ input.e)) * deltaTime*speed
@@ -225,6 +226,9 @@ async function renderAndUpdate() {
     camYDir += (+ input.ArrowRight) * deltaTime*speed*2
     camYDir -= (+ input.ArrowLeft) * deltaTime*speed*2
     camXDir = constrain(camXDir,-80,100)
+
+
+    render()
 
     let fps = 1/deltaTime
     let renderTime = Date.now() - oldTime
