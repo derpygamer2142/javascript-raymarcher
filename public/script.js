@@ -14,7 +14,7 @@ canv.width = WIDTH
 canv.height = HEIGHT
 console.log(WIDTH, HEIGHT)
 
-let e = await fetch("./suzanne.obj")
+let e = await fetch("./teapot.obj")
 let model = await e.text()
 
 function toOriginX(x) {
@@ -70,7 +70,7 @@ let bfc = true
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-let output = objReader.getData(model,0,0,125,55)
+let output = objReader.getData(model,0,0,225,0,0,0,15)
 console.log(output)
 
 

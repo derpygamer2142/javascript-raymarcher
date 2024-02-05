@@ -1,10 +1,12 @@
 import Triangle from "./triangle.js"
+import Misc from "./misc.js"
 export default class objectParser {
     constructor(epsilon) {
         this.epsilon = epsilon
+        this.misc = new Misc()
     }
     
-    getData(file, x, y, z, scale) {
+    getData(file, x, y, z, xrot, yrot, zrot, scale) {
         let s = file.split("\n")
         let v = []
         let f = []
@@ -16,12 +18,26 @@ export default class objectParser {
             ls.reverse()
             switch (func) {
                 case "v":
+                    let cX = + ls[0]
+                    let cY = + ls[1]
+                    let cZ = + ls[2]
+                    let heldp = [cX, cY, cZ]
+                    
+                    if (!(xrot == 0 && yrot == 0 && zrot == 0)){
+                        heldp = this.misc.rotatePoint(cX,cY,cZ,0,0,0,xrot,yrot,zrot)
+                    }
+                    // v.push([
+                    //     (heldp[0] * scale) + x,
+                    //     (heldp[1] * scale)*-1 + y,
+                    //     (heldp[2] * scale) + z
+                    // ])
                     v.push([
                         ((+ ls[0]) * scale) + x,
                         ((+ ls[1]) * scale) + y,
                         ((+ ls[2]) * scale) + z
                     ])
                     break;
+
                 case "f":
                     let heldArg = []
                     let newLine = []

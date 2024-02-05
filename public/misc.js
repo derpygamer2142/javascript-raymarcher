@@ -125,4 +125,42 @@ export default class Misc {
     constrain(n,a,b) {
         return Math.min(b, Math.max(a, n))
     }
+
+    rotatePoint(px,py,pz,x2,y2,z2,pitch,yaw,roll) {
+        // this code is taken from https://stackoverflow.com/questions/34050929/3d-point-rotation-algorithm
+            /*
+            I could probably improve this by letting the function take these trig vals prebaked, however:
+            - idk if 4 trig functions is faster or slower than an if statement
+            - idk if javascript calculates the default value regardless of whether it is used.
+            - this function isn't used very often, and in the current implementation these optimizations would be almost useless.
+            */
+            var cosa = Math.cos(this.toRad(yaw));
+            var sina = Math.sin(this.toRad(yaw));
+        
+            var cosb = Math.cos(this.toRad(pitch));
+            var sinb = Math.sin(this.toRad(pitch));
+        
+            var cosc = Math.cos(this.toRad(roll));
+            var sinc = Math.sin(this.toRad(roll));
+        
+            var Axx = cosa*cosb;
+            var Axy = cosa*sinb*sinc - sina*cosc;
+            var Axz = cosa*sinb*cosc + sina*sinc;
+        
+            var Ayx = sina*cosb;
+            var Ayy = sina*sinb*sinc + cosa*cosc;
+            var Ayz = sina*sinb*cosc - cosa*sinc;
+        
+            var Azx = -sinb;
+            var Azy = cosb*sinc;
+            var Azz = cosb*cosc; // could probably bake this into the camera for speed
+        
+
+            let a = Axx*(x2-px) + Axy*(y2-py) + Axz*(z2-pz);
+            let b = Ayx*(x2-px) + Ayy*(y2-py) + Ayz*(z2-pz);
+            let c = Azx*(x2-px) + Azy*(y2-py) + Azz*(z2-pz);
+            return [a,b,c]
+    }
+
+
 }
