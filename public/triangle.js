@@ -80,5 +80,10 @@ export default class Triangle {
         return this.misc.normalize(nx,ny,nz)
     }
 
+    colorAt(x,y,z) {
+        //temp
+        return [this.r,this.g,this.b]
+    }
+
 
 }

@@ -4,6 +4,8 @@ import Box from "./box.js"
 import Triangle from "./triangle.js";
 import Input from "./input.js";
 import objectParser from "./objectParser.js";
+import Texture from "./texture.js";
+import TextureParser from "./textureparser.js";
 
 const canv = document.getElementById("screen");
 const ctx = canv.getContext("2d");
@@ -75,8 +77,16 @@ console.log(output)
 
 
 let objects = []//output[1];
-//objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
-objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
+let heldTextureFile = await fetch("./textures/duck.txt")
+heldTextureFile = await heldTextureFile.text() // i always forget this function returns a promise for some reason
+const textureParser = new TextureParser()
+let heldTexture = new Texture(textureParser.parseTexture(heldTextureFile),250,250)
+//objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
+objects.push(new Sphere(0,-35,120,75,255,255,255,0.5,175,null))
+objects.push(new Sphere(0,25,120,60,255,255,255,0.5,175,null))
+objects.push(new Sphere(0,75,120,45,255,255,255,0.5,175,heldTexture)) // 65
+
+//objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 
@@ -142,15 +152,17 @@ function raymarchPixel(x,y) {
         // pr = contactObject.r
         // pg = contactObject.g
         // pb = contactObject.b
-        let [r,g,b] = [contactObject.r,contactObject.g,contactObject.b]
+        let [r,g,b] = contactObject.colorAt(rx,ry,rz)
         let v = contactObject.normalTo(rx,ry,rz)
         if (renderType == "normal") {
             let lv = misc.vectorBetween(lx,ly,lz,contactObject.x,contactObject.y,contactObject.z) // get the normal from the object's center to the light
             let lightingVal = misc.dotProduct(v,misc.normalize(lv[0],lv[1],lv[2]))
-            lightingVal *= 45
             // let ld = misc.dist(rx,ry,rz,lx,ly,lz)
-            // ld -= lr
-            // lightingVal /= (ld)
+            // // ld -= lr
+            // lightingVal /= (ld * ld)
+            
+            lightingVal *= 45
+
 
             r += lightingVal
             g += lightingVal

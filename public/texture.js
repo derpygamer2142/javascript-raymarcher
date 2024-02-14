@@ -4,6 +4,9 @@ export default class Texture {
         this.texture = textureList
         this.width = width
         this.height = height
+        if (width != height) {
+            console.warn("Texture warning: Non square textures may cause stretching or unintended effects")
+        }
 
         this.misc = new Misc()
     }
@@ -24,8 +27,8 @@ export default class Texture {
 
         offset coords by 1,1
         */
-        u *= (width - 1)
-        v *= (height - 1)
+        u *= (this.width - 1)
+        v *= (this.height - 1)
         u += 1
         v += 1
         // make the uv coords on a scale from 1 to width or height

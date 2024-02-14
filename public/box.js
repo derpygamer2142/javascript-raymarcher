@@ -40,4 +40,9 @@ export default class Box {
         let nz = this.dist(x,y,z+this.epsilon) - this.dist(x,y,z-this.epsilon)
         return this.misc.normalize(nx,ny,nz)
     }
+
+    colorAt(x,y,z) {
+        // temp
+        return [this.r,this.g,this.b]
+    }
 }
