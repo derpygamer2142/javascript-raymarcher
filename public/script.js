@@ -14,7 +14,7 @@ canv.width = WIDTH
 canv.height = HEIGHT
 console.log(WIDTH, HEIGHT)
 
-let e = await fetch("./teapot.obj")
+let e = await fetch("./models/teapot.obj")
 let model = await e.text()
 
 function toOriginX(x) {
@@ -74,9 +74,9 @@ let output = objReader.getData(model,0,0,225,0,0,0,15)
 console.log(output)
 
 
-let objects = output[1];
+let objects = []//output[1];
 //objects.push(new Sphere(0,0,85,65,128,128,128,0.5,175))
-//objects.push(new Box(0,0,125,75,75,75,15,128,127,128,0.5,175,epsilon))
+objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 
@@ -201,6 +201,9 @@ async function renderAndUpdate() {
                 if (!(misc.dotProduct(o.normal,misc.normalize(e[0],e[1],e[2])) < 0)) {
                     toRender.push(o)
                 }
+            }
+            else {
+                toRender.push(o)
             }
         } // back face culling in a raymarcher?! :scream:
     }

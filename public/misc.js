@@ -163,4 +163,9 @@ export default class Misc {
     }
 
 
+    coordsToIndex(x,y,width) {
+        return (y * width) - (width - x)
+    }
+
+
 }
