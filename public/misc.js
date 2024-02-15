@@ -86,6 +86,7 @@ export default class Misc {
             (a[2]*b[0]) - (b[2]*a[0]),
             (a[0]*b[1]) - (b[0]*a[1])
         ]
+
     }
 
     dot2(v) {
@@ -166,6 +167,32 @@ export default class Misc {
     coordsToIndex(x,y,width) {
         return (y * width) - (width - x)
     }
+
+
+    addVector2(a,b) {
+        return [
+            a[0]+b[0],
+            a[1]+b[1],
+            a[2]+b[2]
+        ]
+    }
+
+    subVector2(a,b) {
+        return [
+            a[0]-b[0],
+            a[1]-b[1],
+            a[2]-b[2]
+        ]
+    }
+
+    multVector2(v,s) {
+        return [
+            v[0]*s,
+            v[1]*s,
+            v[2]*s
+        ]
+    }
+
 
 
 }

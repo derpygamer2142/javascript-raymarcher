@@ -1,5 +1,7 @@
 import Triangle from "./triangle.js"
 import Misc from "./misc.js"
+import Texture from "./texture.js"
+import TextureParser from "./textureparser.js"
 export default class objectParser {
     constructor(epsilon) {
         this.epsilon = epsilon
@@ -59,5 +61,13 @@ export default class objectParser {
             }
         })
         return [v,f]
+    }
+
+    async fetchTextureFromPath(path,width,height) {
+        let heldTextureFile = await fetch(path)
+        heldTextureFile = await heldTextureFile.text()
+        const textureParser = new TextureParser()
+        let heldTexture = new Texture(textureParser.parseTexture(heldTextureFile),width,height)
+        return heldTexture
     }
 }
