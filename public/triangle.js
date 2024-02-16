@@ -99,11 +99,14 @@ export default class Triangle {
        if (this.texture == null) {
             return [this.r,this.g,this.b]
        }
-       
+       rayDir[1] *= -1
+       rayOrigin[1] *= -1
+
         let d = -1/(this.misc.dotProduct(rayDir,this.misc.cross(this.misc.subVectors(this.b2,this.a),this.misc.subVectors(this.c,this.a))))
         let n = this.misc.cross(this.misc.subVectors(rayOrigin,this.a),rayDir)
         let u = d*(this.misc.dotProduct(this.misc.subVectors(this.c,this.a),n))
         let v = (d*-1)*(this.misc.dotProduct(this.misc.subVectors(this.b2,this.a),n))
+        //console.log(rayDir,this.misc.cross(this.misc.subVectors(this.b2,this.a),this.misc.subVectors(this.c,this.a)))
         if ((u > 0)||(v > 0)&&(u+v <= 0)) {
             let uv = this.misc.addVector2(
                 this.misc.addVector2(
@@ -124,10 +127,11 @@ export default class Triangle {
                     v
                 )
             )
-            console.log(uv)
+            //console.log(uv)
             return this.texture.colorAt(uv[0],uv[1])
 
         }
+        return [255,0,0]
 
         
     }

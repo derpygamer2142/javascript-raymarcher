@@ -98,7 +98,7 @@ let objects = []//output[1];
 
 //objects.push(new Sphere(15,75,220,45,255,255,255,0.5,175,textureLibrary.overweight_duck))
 //objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
-objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon,textureLibrary.duck,[0,0],[0.5,1],[1,0]))
+objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon,textureLibrary.missing,[0,0],[0.5,1],[1,0]))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 
 let toRender = []
@@ -166,10 +166,20 @@ function raymarchPixel(x,y) {
         //console.log(rayLength)
     }
     else {
+        //console.log(xv,yv,zv)
         // pr = contactObject.r
         // pg = contactObject.g
         // pb = contactObject.b
-        let [r,g,b] = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
+        let objRGB = contactObject.colorAt(rx,ry,rz,[xv,yv,zv],[camX,camY,camZ])
+        //console.log(contactObject)
+        //console.log(objRGB)
+        let r = objRGB[0]
+        let g = objRGB[1]
+        let b = objRGB[2]
+        //let [r,g,b] = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
+        //let objRGB = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
+        //console.log(objRGB)
+        //let [r,g,b] = [255,0,0]
         let v = contactObject.normalTo(rx,ry,rz)
         if (renderType == "normal") {
             let lv = misc.vectorBetween(lx,ly,lz,contactObject.x,contactObject.y,contactObject.z) // get the normal from the object's center to the light
