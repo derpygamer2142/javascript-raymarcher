@@ -128,7 +128,7 @@ export default class Triangle {
                 )
             )
             //console.log(uv)
-            return this.texture.colorAt(uv[0],uv[1])
+            return this.texture.colorAt(uv[0],1-uv[1])
 
         }
         return [255,0,0]

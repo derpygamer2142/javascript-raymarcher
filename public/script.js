@@ -66,7 +66,7 @@ async function fetchTextureFromPath(path,width,height) {
 let fov = 135
 let renderDist = 3000;
 let epsilon = 0.01
-let resolution = 8
+let resolution = 2
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
 let renderType = "normal" // none, normal, actual, diffuse. None is fastest, diffuse is slowest.
@@ -98,7 +98,7 @@ let objects = []//output[1];
 
 //objects.push(new Sphere(15,75,220,45,255,255,255,0.5,175,textureLibrary.overweight_duck))
 //objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
-objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon,textureLibrary.duck,[0,0],[0.5,1],[1,0]))
+objects.push(new Triangle([0,30,25],[45,-35,25],[-45,-35,25],128,128,128,0.5,175,epsilon,textureLibrary.duck,[0.5,1],[1,0],[0,0]))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 
 let toRender = []
