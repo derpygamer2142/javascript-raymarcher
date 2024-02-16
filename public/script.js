@@ -16,8 +16,6 @@ canv.width = WIDTH
 canv.height = HEIGHT
 console.log(WIDTH, HEIGHT)
 
-let e = await fetch("./models/teapot.obj")
-let model = await e.text()
 
 function toOriginX(x) {
     return x - (WIDTH/2);
@@ -66,7 +64,7 @@ async function fetchTextureFromPath(path,width,height) {
 let fov = 135
 let renderDist = 3000;
 let epsilon = 0.01
-let resolution = 2
+let resolution = 8 // works best with a multiple of 2, or just 1
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
 let renderType = "normal" // none, normal, actual, diffuse. None is fastest, diffuse is slowest.
@@ -75,21 +73,26 @@ let ly = 105
 let lz = -100
 let lr = 15
 let bfc = true
+
 const textureLibrary = {
     "duck": await fetchTextureFromPath("duck",250,250),
     "missing": await fetchTextureFromPath("missing texture",125,125),
-    "overweight_duck": await fetchTextureFromPath("overweight duck",250,250)
+    "overweight_duck": await fetchTextureFromPath("overweight duck",250,250),
+    "missing2": await fetchTextureFromPath("missing2",750,750)
 }
 
 
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-let output = objReader.getData(model,0,0,225,0,0,0,15)
+let e = await fetch("./models/3dmm models/Gregory/gregory.obj")
+let model = await e.text()
+
+let output = objReader.getData(model,0,0,325,0,0,0,35,textureLibrary.duck)
 console.log(output)
 
 
-let objects = []//output[1];
+let objects = output[1];
 
 //objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
 //objects.push(new Sphere(0,-35,120,75,255,255,255,0.5,175,null))
@@ -98,7 +101,8 @@ let objects = []//output[1];
 
 //objects.push(new Sphere(15,75,220,45,255,255,255,0.5,175,textureLibrary.overweight_duck))
 //objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
-objects.push(new Triangle([0,30,25],[45,-35,25],[-45,-35,25],128,128,128,0.5,175,epsilon,textureLibrary.duck,[0.5,1],[1,0],[0,0]))
+//objects.push(new Triangle([-45,45,35],[45,-45,35],[-45,-45,35],128,128,128,0.5,175,epsilon,textureLibrary.duck,[0,1],[1,0],[0,0]))
+//objects.push(new Triangle([45,45,35],[45,-45,35],[-45,45,35],128,128,128,0.5,175,epsilon,textureLibrary.duck,[1,1],[1,0],[0,1]))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 
 let toRender = []
@@ -173,9 +177,11 @@ function raymarchPixel(x,y) {
         let objRGB = contactObject.colorAt(rx,ry,rz,[xv,yv,zv],[camX,camY,camZ])
         //console.log(contactObject)
         //console.log(objRGB)
-        let r = objRGB[0]
-        let g = objRGB[1]
-        let b = objRGB[2]
+        let [r,g,b] = [0,0,0]
+        //console.log(typeof objRGB)
+        r = objRGB[0]
+        g = objRGB[1]
+        b = objRGB[2]
         //let [r,g,b] = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
         //let objRGB = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
         //console.log(objRGB)

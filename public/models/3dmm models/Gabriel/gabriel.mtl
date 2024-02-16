@@ -1,0 +1,91 @@
+# Material file for gabriel.obj
+
+newmtl defaultMat
+	Ns 43
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.2 0.2 0.2
+	Ka 0.0 0.0 0.0
+
+newmtl gabe_face
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 35.TMAP.png
+
+newmtl gabe_ear_left
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 36.TMAP.png
+
+newmtl gabe_ear_right
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 37.TMAP.png
+
+newmtl gabe_hair
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 38.TMAP.png
+
+newmtl gabe_skin
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 39.TMAP.png
+
+newmtl gabe_belly
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 40.TMAP.png
+
+newmtl gabe_back
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 41.TMAP.png
+
+newmtl gabe_sleeve
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 42.TMAP.png
+
+newmtl gabe_diaper
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd 43.TMAP.png
+
