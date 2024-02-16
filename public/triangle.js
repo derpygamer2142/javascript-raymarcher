@@ -1,7 +1,7 @@
 import Misc from "./misc.js"
 
 export default class Triangle {
-    constructor(c1,c2,c3,r,g,b,reflectivity,brightness, epsilon, texture, normal=null,uv0=null,uv1=null,uv2=null) {
+    constructor(c1,c2,c3,r,g,b,reflectivity,brightness, epsilon, texture, uv0,uv1,uv2, normal=null,) {
         // that's a lot of stuff
         this.a = c1
         this.b2 = c2
@@ -9,6 +9,9 @@ export default class Triangle {
         this.x = (c1[0]+c2[0]+c3[0])/3.0
         this.y = (c1[1]+c2[1]+c3[1])/3.0
         this.z = (c1[2]+c2[2]+c3[2])/3.0
+        this.uv0 = uv0
+        this.uv1 = uv1
+        this.uv2 = uv2
 
         this.r = r
         this.g = g
@@ -96,7 +99,7 @@ export default class Triangle {
        if (this.texture == null) {
             return [this.r,this.g,this.b]
        }
-
+       
         let d = -1/(this.misc.dotProduct(rayDir,this.misc.cross(this.misc.subVectors(this.b2,this.a),this.misc.subVectors(this.c,this.a))))
         let n = this.misc.cross(this.misc.subVectors(rayOrigin,this.a),rayDir)
         let u = d*(this.misc.dotProduct(this.misc.subVectors(this.c,this.a),n))
@@ -121,6 +124,7 @@ export default class Triangle {
                     v
                 )
             )
+            console.log(uv)
             return this.texture.colorAt(uv[0],uv[1])
 
         }

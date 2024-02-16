@@ -53,7 +53,7 @@ function toneMapRGB(r,g,b) {
 // most of the vector math relies on the origin being in the center of the screen
 
 async function fetchTextureFromPath(path,width,height) {
-    let heldTextureFile = await fetch(path)
+    let heldTextureFile = await fetch(`./textures/${path}.txt`)
     heldTextureFile = await heldTextureFile.text()
     const textureParser = new TextureParser()
     let heldTexture = new Texture(textureParser.parseTexture(heldTextureFile),width,height)
@@ -75,7 +75,11 @@ let ly = 105
 let lz = -100
 let lr = 15
 let bfc = true
-
+const textureLibrary = {
+    "duck": await fetchTextureFromPath("duck",250,250),
+    "missing": await fetchTextureFromPath("missing texture",125,125),
+    "overweight_duck": await fetchTextureFromPath("overweight duck",250,250)
+}
 
 
 const misc = new Misc()
@@ -90,21 +94,26 @@ let objects = []//output[1];
 //objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
 //objects.push(new Sphere(0,-35,120,75,255,255,255,0.5,175,null))
 //objects.push(new Sphere(0,25,120,60,255,255,255,0.5,175,null))
-objects.push(new Sphere(0,75,120,45,255,255,255,0.5,175,await fetchTextureFromPath("./textures/duck.txt",250,250)))
+//objects.push(new Sphere(0,75,120,45,255,255,255,0.5,175,textureLibrary.duck))
 
-objects.push(new Sphere(15,75,220,45,255,255,255,0.5,175,await fetchTextureFromPath("./textures/overweight duck.txt",250,250)))
+//objects.push(new Sphere(15,75,220,45,255,255,255,0.5,175,textureLibrary.overweight_duck))
 //objects.push(new Box(0,0,185,75,75,75,25,128,127,128,0.5,175,epsilon))
-//objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
+objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon,textureLibrary.duck,[0,0],[0.5,1],[1,0]))
 //objects.push(new Triangle([0,20,45],[45,-45,15],[-45,-45,15],128,128,128,0.5,175,epsilon))
 
 let toRender = []
 
 
-let camX = 65 // it breaks when camX is 0. No clue why, not fixing it either.
-let camY = -88
-let camZ = 140
-let camXDir = 20
-let camYDir = -75
+// let camX = 65 // it breaks when camX is 0. No clue why, not fixing it either.
+// let camY = -88
+// let camZ = 140
+// let camXDir = 20
+// let camYDir = -75
+let camX = 0.1 // it breaks when camX is 0. No clue why, not fixing it either.
+let camY = 0
+let camZ = 0
+let camXDir = 0
+let camYDir = 0
 
 let focalLength = (WIDTH/2)/Math.tan(misc.toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 let deltaTime = 0
@@ -160,7 +169,7 @@ function raymarchPixel(x,y) {
         // pr = contactObject.r
         // pg = contactObject.g
         // pb = contactObject.b
-        let [r,g,b] = contactObject.colorAt(rx,ry,rz)
+        let [r,g,b] = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
         let v = contactObject.normalTo(rx,ry,rz)
         if (renderType == "normal") {
             let lv = misc.vectorBetween(lx,ly,lz,contactObject.x,contactObject.y,contactObject.z) // get the normal from the object's center to the light

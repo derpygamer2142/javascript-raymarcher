@@ -1,14 +1,13 @@
 import Triangle from "./triangle.js"
 import Misc from "./misc.js"
-import Texture from "./texture.js"
-import TextureParser from "./textureparser.js"
+
 export default class objectParser {
     constructor(epsilon) {
         this.epsilon = epsilon
         this.misc = new Misc()
     }
     
-    getData(file, x, y, z, xrot, yrot, zrot, scale) {
+    getData(file, x, y, z, xrot, yrot, zrot, scale, texture) {
         let s = file.split("\n")
         let v = []
         let f = []
@@ -48,7 +47,7 @@ export default class objectParser {
                         newLine.push(v[heldArg[0]-1]) // currently not worrying about vertex normals or texture uvs. Just care about the coords.
                         // split each argument by / , then only keep the first part. This is the coordinate index. Add it to the new line, which will have all of the coordinates.
                     })
-                    let t = new Triangle(newLine[0],newLine[1],newLine[2],128,128,128,0.5,175,this.epsilon)
+                    let t = new Triangle(newLine[0],newLine[1],newLine[2],128,128,128,0.5,175,this.epsilon,texture)
                     f.push(t)
                     //console.log(newLine)
 
@@ -63,11 +62,5 @@ export default class objectParser {
         return [v,f]
     }
 
-    async fetchTextureFromPath(path,width,height) {
-        let heldTextureFile = await fetch(path)
-        heldTextureFile = await heldTextureFile.text()
-        const textureParser = new TextureParser()
-        let heldTexture = new Texture(textureParser.parseTexture(heldTextureFile),width,height)
-        return heldTexture
-    }
+
 }
