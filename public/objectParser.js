@@ -12,6 +12,7 @@ export default class objectParser {
         let v = []
         let f = []
         let uvs = []
+        let currentTexture = texture
         s.forEach(l => {
             let ls = l.split(" ")
             let func = ls[0]

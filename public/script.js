@@ -64,7 +64,7 @@ async function fetchTextureFromPath(path,width,height) {
 let fov = 135
 let renderDist = 3000;
 let epsilon = 0.01
-let resolution = 8 // works best with a multiple of 2, or just 1
+let resolution = 16 // works best with a multiple of 2, or just 1
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
 let renderType = "normal" // none, normal, actual, diffuse. None is fastest, diffuse is slowest.
@@ -72,7 +72,7 @@ let lx = 0
 let ly = 105
 let lz = -100
 let lr = 15
-let bfc = true
+let bfc = false // bfc is broken af
 
 const textureLibrary = {
     "duck": await fetchTextureFromPath("duck",250,250),
@@ -88,7 +88,7 @@ const objReader = new objectParser(epsilon)
 let e = await fetch("./models/3dmm models/Gregory/gregory.obj")
 let model = await e.text()
 
-let output = objReader.getData(model,0,0,325,0,0,0,35,textureLibrary.duck)
+let output = objReader.getData(model,0,-35,55,0,0,0,35,textureLibrary.missing)
 console.log(output)
 
 
@@ -282,7 +282,7 @@ async function renderAndUpdate() {
     let renderTime = Date.now() - oldTime
     ctx.fillStyle = "black"
     ctx.font = "30px Comic Sans MS"
-    printLines([`Rendered ${toRender.length} shapes in ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
+    printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)
