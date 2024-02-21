@@ -7,7 +7,7 @@ newmtl tex124490400
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124490400.png
+	map_Kd tex124490400.png 120 250
 
 newmtl tex124488992
 	Ns 0
@@ -16,7 +16,7 @@ newmtl tex124488992
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124488992.png
+	map_Kd tex124488992.png 152 75
 
 newmtl tex124488352
 	Ns 0
@@ -25,7 +25,7 @@ newmtl tex124488352
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124488352.png
+	map_Kd tex124488352.png 80 102
 
 newmtl tex124491168
 	Ns 0
@@ -34,7 +34,7 @@ newmtl tex124491168
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124491168.png
+	map_Kd tex124491168.png 104 80
 
 newmtl tex124490528
 	Ns 0
@@ -43,7 +43,7 @@ newmtl tex124490528
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124490528.png
+	map_Kd tex124490528.png 52 50
 
 newmtl tex124491552
 	Ns 0
@@ -52,7 +52,7 @@ newmtl tex124491552
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124491552.png
+	map_Kd tex124491552.png 52 156
 
 newmtl tex124491680
 	Ns 0
@@ -61,5 +61,5 @@ newmtl tex124491680
 	Kd 0.8 0.8 0.8
 	Ks 0.0 0.0 0.0
 	Ka 0.2 0.2 0.2
-	map_Kd tex124491680.png
+	map_Kd tex124491680.png 100 119
 
