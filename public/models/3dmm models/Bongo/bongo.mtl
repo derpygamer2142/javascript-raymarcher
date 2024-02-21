@@ -1,127 +1,132 @@
-# Material file for bongo.obj
-
-newmtl defaultMat
-	Ns 43
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.2 0.2 0.2
-	Ka 0.0 0.0 0.0
-
-newmtl bongo_face
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74005.TMAP.png
-
-newmtl bongo_lips
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74006.TMAP.png
-
-newmtl bongo_eye
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74007.TMAP.png
-
-newmtl bongo_ear_r
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74008.TMAP.png
-
-newmtl bongo_ear_l
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74009.TMAP.png
-
-newmtl bongo_shirt
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74010.TMAP.png
-
-newmtl bongo_sleeve
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74011.TMAP.png
-
-newmtl bongo_pants
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74014.TMAP.png
-
-newmtl bongo_leg
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74015.TMAP.png
-
-newmtl bongo_shoe
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74016.TMAP.png
-
-newmtl bongo_hair
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74004.TMAP.png
-
-newmtl bongo_hands
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74026.TMAP.png
+# Blender 3.4.1 MTL File: 'None'
+# www.blender.org
 
 newmtl bongo_arm_front
-	Ns 0
-	d 1
-	illum 2
-	Kd 0.8 0.8 0.8
-	Ks 0.0 0.0 0.0
-	Ka 0.2 0.2 0.2
-	map_Kd 74012.TMAP.png
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74012.TMAP.png 136 120
 
+newmtl bongo_ear_l
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74009.TMAP.png 40 50
+
+newmtl bongo_ear_r
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74008.TMAP.png 40 50
+
+newmtl bongo_eye
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74007.TMAP.png 80 68
+
+newmtl bongo_face
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74005.TMAP.png 256 256
+
+newmtl bongo_hair
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74004.TMAP.png 16 16
+
+newmtl bongo_hands
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74026.TMAP.png 135 120
+
+newmtl bongo_leg
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74015.TMAP.png 100 120
+
+newmtl bongo_lips
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74006.TMAP.png 52 31
+
+newmtl bongo_pants
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74014.TMAP.png 228 196
+
+newmtl bongo_shirt
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74010.TMAP.png 256 256
+
+newmtl bongo_shoe
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74016.TMAP.png 120 100
+
+newmtl bongo_sleeve
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd 74011.TMAP.png 152 150
