@@ -9,7 +9,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 69704.TMAP.png
+map_Kd 69704.TMAP.png 72 50
 
 newmtl plane_side
 Ns 0.000000
@@ -19,7 +19,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 69702.TMAP.png
+map_Kd 69702.TMAP.png 284 108
 
 newmtl plane_wing_bottom
 Ns 0.000000
@@ -29,7 +29,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 69705.TMAP.png
+map_Kd 69705.TMAP.png 52 70
 
 newmtl plane_wing_top
 Ns 0.000000
@@ -39,4 +39,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 69703.TMAP.png
+map_Kd 69703.TMAP.png 52 70

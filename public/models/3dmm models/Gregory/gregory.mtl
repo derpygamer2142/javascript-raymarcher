@@ -9,7 +9,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 266.TMAP.png
+map_Kd 266.TMAP.png 50 50
 
 newmtl greg_ear_r
 Ns 0.000000
@@ -19,7 +19,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 265.TMAP.png
+map_Kd 265.TMAP.png 50 50
 
 newmtl greg_face
 Ns 0.000000
@@ -29,7 +29,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 264.TMAP.png
+map_Kd 264.TMAP.png 225 225
 
 newmtl greg_hair
 Ns 0.000000
@@ -39,7 +39,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 267.TMAP.png
+map_Kd 267.TMAP.png 120 75
 
 newmtl greg_hat
 Ns 0.000000
@@ -49,7 +49,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 275.TMAP.png
+map_Kd 275.TMAP.png 120 120
 
 newmtl greg_leg
 Ns 0.000000
@@ -59,7 +59,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 273.TMAP.png
+map_Kd 273.TMAP.png 100 120
 
 newmtl greg_pants
 Ns 0.000000
@@ -69,7 +69,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 271.TMAP.png
+map_Kd 271.TMAP.png 170 130
 
 newmtl greg_shirt_back
 Ns 0.000000
@@ -79,7 +79,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 269.TMAP.png
+map_Kd 269.TMAP.png 150 150
 
 newmtl greg_shirt_front
 Ns 0.000000
@@ -89,7 +89,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 268.TMAP.png
+map_Kd 268.TMAP.png 256 256
 
 newmtl greg_shoes
 Ns 0.000000
@@ -99,7 +99,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 274.TMAP.png
+map_Kd 274.TMAP.png 120 100
 
 newmtl greg_skin
 Ns 0.000000
@@ -109,7 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 74026.TMAP.png
+map_Kd 74026.TMAP.png 135 120
 
 newmtl greg_sleeve
 Ns 0.000000
@@ -119,7 +119,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 270.TMAP.png
+map_Kd 270.TMAP.png 135 135
 
 newmtl greg_sock
 Ns 0.000000
@@ -129,4 +129,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd 272.TMAP.png
+map_Kd 272.TMAP.png 100 120
