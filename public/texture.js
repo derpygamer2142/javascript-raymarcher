@@ -4,9 +4,9 @@ export default class Texture {
         this.texture = textureList
         this.width = width
         this.height = height
-        if (width != height) {
-            console.warn("Texture warning: Non square textures may cause stretching or unintended effects")
-        }
+        // if (width != height) {
+        //     console.warn("Texture warning: Non square textures may cause stretching or unintended effects")
+        // }
 
         this.misc = new Misc()
     }

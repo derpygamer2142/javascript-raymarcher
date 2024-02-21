@@ -85,10 +85,10 @@ const textureLibrary = {
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-let e = await fetch("./models/3dmm models/Gregory/gregory.obj")
+let e = await fetch("./models/3dmm models/Rocket/rocket.obj")
 let model = await e.text()
 
-let output = objReader.getData(model,0,-35,55,0,0,0,35,textureLibrary.missing)
+let output = await objReader.getData(model,0,-35,100,0,0,0,35,textureLibrary.missing,"./models/3dmm models/Rocket/")
 console.log(output)
 
 
@@ -182,6 +182,7 @@ function raymarchPixel(x,y) {
         r = objRGB[0]
         g = objRGB[1]
         b = objRGB[2]
+
         //let [r,g,b] = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
         //let objRGB = contactObject.colorAt(rx,ry,rz,[camX,camY,camZ],[xv,yv,zv])
         //console.log(objRGB)
