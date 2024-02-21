@@ -85,10 +85,10 @@ const textureLibrary = {
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-let e = await fetch("./models/3dmm models/Bongo/bongo.obj")
+let e = await fetch("./models/3dmm models/Gabriel/gabriel.obj")
 let model = await e.text()
 
-let output = await objReader.getData(model,0,-35,45,0,0,0,35,textureLibrary.missing,"./models/3dmm models/Bongo/")
+let output = await objReader.getData(model,0,-35,45,0,0,0,75,textureLibrary.missing,"./models/3dmm models/Gabriel/")
 console.log(output)
 
 
@@ -113,11 +113,11 @@ let toRender = []
 // let camZ = 140
 // let camXDir = 20
 // let camYDir = -75
-let camX = 2 // it breaks when camX is 0. No clue why, not fixing it either.
-let camY = -218
-let camZ = 145
-let camXDir = 19
-let camYDir = 191
+let camX = -.1 // it breaks when camX is 0. No clue why, not fixing it either.
+let camY = 0
+let camZ = 0
+let camXDir = 0
+let camYDir = 0
 
 let focalLength = (WIDTH/2)/Math.tan(misc.toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 let deltaTime = 0
