@@ -17,13 +17,13 @@ export default class objectParser {
         let uvs = []
         let textureLibrary = {}
         let currentTexture = texture
-        console.log(currentTexture)
         let currentLib = {
             "texture": texture,
             "r": r,
             "g": g,
             "b": b,
-            "ns": settings.ns
+            "ns": settings.ns,
+            "ks": settings.ks
         }
         for (let i = 0; i < s.length; i++) {
             let l = s[i]
@@ -72,7 +72,7 @@ export default class objectParser {
                         newLine.push(v[heldArg[0]-1]) // currently not worrying about vertex normals or texture uvs. Just care about the coords.
                         // split each argument by / , then only keep the first part. This is the coordinate index. Add it to the new line, which will have all of the coordinates.
                     })
-                    let t = new Triangle(newLine[0],newLine[1],newLine[2],r,g,b,currentLib.ns,175,this.epsilon,currentTexture,pUV[0],pUV[1],pUV[2])
+                    let t = new Triangle(newLine[0],newLine[1],newLine[2],r,g,b,currentLib.ks,175,this.epsilon,currentTexture,pUV[0],pUV[1],pUV[2])
                     f.push(t)
                     //console.log(newLine)
 
@@ -96,7 +96,7 @@ export default class objectParser {
                         r *= 255
                         g *= 255
                         b *= 255
-                        textureLibrary[ls[0]]["ns"] /= 1000
+                        //textureLibrary[ls[0]]["ns"] /= 1000
                         currentLib = textureLibrary[ls[0]]
                         //console.log(currentTexture )
                     }
@@ -143,7 +143,14 @@ export default class objectParser {
                         // add the kd
                         library[splitTextureFile[0]]["kd"] = [args[0],args[1],args[2]]
                     case "Ns":
-                        library[splitTextureFile[0]]["ns"] = args[0] // specular component is just shinyness right? wikipedia is not helpful
+                        //library[splitTextureFile[0]]["ns"] = args[0] // i have no clue what this one is
+                        break;
+                    case "Ks":
+                        args[0] = + args[0]
+                        args[1] = + args[1]
+                        args[2] = + args[2]
+                        library[splitTextureFile[0]]["ks"] = (args[0] + args[1] + args[2])/3
+                        break;
 
                 }
             }

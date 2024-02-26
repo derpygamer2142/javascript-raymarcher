@@ -197,7 +197,7 @@ function raymarchPixel(x,y) {
             // // ld -= lr
             // lightingVal /= (ld * ld)
             
-            lightingVal *= 45
+            lightingVal *= 45*(contactObject.reflectivity+0.75)
 
 
             r += lightingVal
