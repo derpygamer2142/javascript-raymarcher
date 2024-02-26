@@ -88,7 +88,9 @@ const objReader = new objectParser(epsilon)
 let e = await fetch("./models/spartan.obj")
 let model = await e.text()
 
-let output = await objReader.getData(model,0,-35,45,0,0,0,0.8,128,128,128,null,"./models/", true)
+let output = await objReader.getData(model,0,-35,45,0,0,0,0.8,128,128,128,null,"./models/", true, {
+    "ns": 0.5
+})
 console.log(output)
 
 

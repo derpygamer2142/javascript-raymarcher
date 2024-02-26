@@ -10,7 +10,7 @@ export default class objectParser {
         this.textureParser = new TextureParser()
     }
     
-    async getData(file, x, y, z, xrot, yrot, zrot, scale, r, g, b, texture, path, overrideTexture) {
+    async getData(file, x, y, z, xrot, yrot, zrot, scale, r, g, b, texture, path, overrideTexture, settings) {
         let s = file.split("\n")
         let v = []
         let f = []
@@ -18,6 +18,13 @@ export default class objectParser {
         let textureLibrary = {}
         let currentTexture = texture
         console.log(currentTexture)
+        let currentLib = {
+            "texture": texture,
+            "r": r,
+            "g": g,
+            "b": b,
+            "ns": settings.ns
+        }
         for (let i = 0; i < s.length; i++) {
             let l = s[i]
             let ls = l.split(" ")
@@ -65,7 +72,7 @@ export default class objectParser {
                         newLine.push(v[heldArg[0]-1]) // currently not worrying about vertex normals or texture uvs. Just care about the coords.
                         // split each argument by / , then only keep the first part. This is the coordinate index. Add it to the new line, which will have all of the coordinates.
                     })
-                    let t = new Triangle(newLine[0],newLine[1],newLine[2],r,g,b,0.5,175,this.epsilon,currentTexture,pUV[0],pUV[1],pUV[2])
+                    let t = new Triangle(newLine[0],newLine[1],newLine[2],r,g,b,currentLib.ns,175,this.epsilon,currentTexture,pUV[0],pUV[1],pUV[2])
                     f.push(t)
                     //console.log(newLine)
 
@@ -81,7 +88,16 @@ export default class objectParser {
                     break;
                 case "usemtl":
                     if (overrideTexture){
-                        currentTexture = textureLibrary[ls[0]]
+                        if (textureLibrary[ls[0]].hasOwnProperty("texture")){
+                            currentTexture = textureLibrary[ls[0]]["texture"]
+                        }
+
+                        [r,g,b] = textureLibrary[ls[0]]["kd"]
+                        r *= 255
+                        g *= 255
+                        b *= 255
+                        textureLibrary[ls[0]]["ns"] /= 1000
+                        currentLib = textureLibrary[ls[0]]
                         //console.log(currentTexture )
                     }
                     break;
@@ -99,8 +115,10 @@ export default class objectParser {
         //console.log(subTextures)
 
         for (let i = 0; i < subTextures.length; i++) {
+            
             // this code is disgusting and i hate it
             let splitTextureFile = subTextures[i].split("\n")
+            library[splitTextureFile[0]] = {}
             // split each material in the library into groups, then split each group into lines and parse through them
             for (let e = 0; e < splitTextureFile.length; e++) {
                 let line = splitTextureFile[e]
@@ -110,6 +128,7 @@ export default class objectParser {
                 args.reverse()
                 args.pop()
                 args.reverse()
+                
                 switch (mtlFunc) {
                     case "map_Kd":
                         //console.log(args)
@@ -118,8 +137,13 @@ export default class objectParser {
                         // fetch the texture
                         let groupedTexture = this.textureParser.parseTexture(response)
                         let newTexture = new Texture(groupedTexture,args[1],args[2]) // i don't manually edit the mtls, whatever could you mean
-                        library[splitTextureFile[0]] = newTexture
+                        library[splitTextureFile[0]]["texture"] = newTexture
                         break;
+                    case "Kd":
+                        // add the kd
+                        library[splitTextureFile[0]]["kd"] = [args[0],args[1],args[2]]
+                    case "Ns":
+                        library[splitTextureFile[0]]["ns"] = args[0] // specular component is just shinyness right? wikipedia is not helpful
 
                 }
             }
