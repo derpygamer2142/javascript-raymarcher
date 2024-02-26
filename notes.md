@@ -5,6 +5,7 @@
 - when defining textures, either give it a texture or null. if texture is null it will default to the previously defined color.
 
 - for obj parsing, shapes will use the texture provided until it is overwritten by an mtl usage instruction
+    - this will only happen if overrideTexture is true
 
 - textures must be converted to decimal new line RGB: [Useful conversion site](https://xeltalliv.github.io/ScratchTools/Img2list/#dn1)
 
@@ -28,4 +29,6 @@
 
 - all images refrenced by an mtl file must be in the same directory as the obj file and mtl file. they need to follow the naming scheme **imageName.fileExtension.txt**. Ex: 69702.TMAP.png.txt
 
+
 - if something has more than 300 tris, it will probably run at < 1 fps on 8 resolution.
+

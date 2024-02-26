@@ -10,13 +10,14 @@ export default class objectParser {
         this.textureParser = new TextureParser()
     }
     
-    async getData(file, x, y, z, xrot, yrot, zrot, scale, texture, path) {
+    async getData(file, x, y, z, xrot, yrot, zrot, scale, r, g, b, texture, path, overrideTexture) {
         let s = file.split("\n")
         let v = []
         let f = []
         let uvs = []
         let textureLibrary = {}
         let currentTexture = texture
+        console.log(currentTexture)
         for (let i = 0; i < s.length; i++) {
             let l = s[i]
             let ls = l.split(" ")
@@ -64,7 +65,7 @@ export default class objectParser {
                         newLine.push(v[heldArg[0]-1]) // currently not worrying about vertex normals or texture uvs. Just care about the coords.
                         // split each argument by / , then only keep the first part. This is the coordinate index. Add it to the new line, which will have all of the coordinates.
                     })
-                    let t = new Triangle(newLine[0],newLine[1],newLine[2],128,128,128,0.5,175,this.epsilon,currentTexture,pUV[0],pUV[1],pUV[2])
+                    let t = new Triangle(newLine[0],newLine[1],newLine[2],r,g,b,0.5,175,this.epsilon,currentTexture,pUV[0],pUV[1],pUV[2])
                     f.push(t)
                     //console.log(newLine)
 
@@ -79,8 +80,10 @@ export default class objectParser {
                     //console.log(parsedMTL)
                     break;
                 case "usemtl":
-                    currentTexture = textureLibrary[ls[0]]
-                    //console.log(currentTexture )
+                    if (overrideTexture){
+                        currentTexture = textureLibrary[ls[0]]
+                        //console.log(currentTexture )
+                    }
                     break;
                 default:
                     //console.log(`ignoring line ${l}`)
@@ -98,7 +101,7 @@ export default class objectParser {
         for (let i = 0; i < subTextures.length; i++) {
             // this code is disgusting and i hate it
             let splitTextureFile = subTextures[i].split("\n")
-            //console.log(splitTextureFile)
+            // split each material in the library into groups, then split each group into lines and parse through them
             for (let e = 0; e < splitTextureFile.length; e++) {
                 let line = splitTextureFile[e]
                 line = line.trim()

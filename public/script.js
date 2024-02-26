@@ -85,10 +85,10 @@ const textureLibrary = {
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-let e = await fetch("./models/3dmm models/Gabriel/gabriel.obj")
+let e = await fetch("./models/spartan.obj")
 let model = await e.text()
 
-let output = await objReader.getData(model,0,-35,45,0,0,0,75,textureLibrary.missing,"./models/3dmm models/Gabriel/")
+let output = await objReader.getData(model,0,-35,45,0,0,0,0.8,128,128,128,null,"./models/", true)
 console.log(output)
 
 
