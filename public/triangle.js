@@ -1,7 +1,7 @@
 import Misc from "./misc.js"
 
 export default class Triangle {
-    constructor(c1,c2,c3,r,g,b,reflectivity,brightness, epsilon, normal=null) {
+    constructor(c1,c2,c3,r,g,b,reflectivity,brightness, epsilon, texture, uv0,uv1,uv2, normal=null,) {
         // that's a lot of stuff
         this.a = c1
         this.b2 = c2
@@ -9,6 +9,9 @@ export default class Triangle {
         this.x = (c1[0]+c2[0]+c3[0])/3.0
         this.y = (c1[1]+c2[1]+c3[1])/3.0
         this.z = (c1[2]+c2[2]+c3[2])/3.0
+        this.uv0 = uv0
+        this.uv1 = uv1
+        this.uv2 = uv2
 
         this.r = r
         this.g = g
@@ -20,6 +23,7 @@ export default class Triangle {
         this.epsilon = epsilon
 
         this.type = "tri"
+        this.texture = texture
 
         // normal calculations. This is slightly faster than calculating when culling afaik. https://www.khronos.org/opengl/wiki/Calculating_a_Surface_Normal
         if (normal == null) {
@@ -78,6 +82,59 @@ export default class Triangle {
         let ny = this.dist(x,y+this.epsilon,z) - this.dist(x,y-this.epsilon,z)
         let nz = this.dist(x,y,z+this.epsilon) - this.dist(x,y,z-this.epsilon)
         return this.misc.normalize(nx,ny,nz)
+    }
+
+    colorAt(x,y,z,rayDir,rayOrigin) {
+        //yikkity yoinked from spong, thanks, very cool
+        /*
+        float d = -1/dot(ray_dir,cross(v1-v0,v2-v0));
+        vec3 n = cross(ray_origin-v0,ray_dir);
+        float u = d*dot(v2-v0,n);
+        float v = -d*dot(v1-v0,n);
+        if (u>0.0||v>0.0&&u+v<=0.0)
+        {
+        vec2 uv = v0uv+u*(v1uv-v0uv)+v*(v2uv-v0uv);
+        }
+        */
+       if (this.texture == null) {
+            return [this.r,this.g,this.b]
+       }
+       rayDir[1] *= -1
+       rayOrigin[1] *= -1
+
+        let d = -1/(this.misc.dotProduct(rayDir,this.misc.cross(this.misc.subVectors(this.b2,this.a),this.misc.subVectors(this.c,this.a))))
+        let n = this.misc.cross(this.misc.subVectors(rayOrigin,this.a),rayDir)
+        let u = d*(this.misc.dotProduct(this.misc.subVectors(this.c,this.a),n))
+        let v = (d*-1)*(this.misc.dotProduct(this.misc.subVectors(this.b2,this.a),n))
+        //console.log(rayDir,this.misc.cross(this.misc.subVectors(this.b2,this.a),this.misc.subVectors(this.c,this.a)))
+        if ((u > 0)||(v > 0)&&(u+v <= 0)) {
+            let uv = this.misc.addVector2(
+                this.misc.addVector2(
+                    this.uv0,
+                    this.misc.multVector2(
+                        this.misc.subVector2(
+                            this.uv1,
+                            this.uv0
+                        ),
+                        u
+                    )
+                ),
+                this.misc.multVector2(
+                    this.misc.subVector2(
+                        this.uv2,
+                        this.uv0
+                    ),
+                    v
+                )
+            )
+            uv[0] = this.misc.constrain(uv[0],0,1)
+            uv[1] = this.misc.constrain(uv[1],0,1) // quick fix, hopefully temporary
+            return this.texture.colorAt(uv[0],1-uv[1])
+
+        }
+        return [0,0,0]
+
+        
     }
 
 

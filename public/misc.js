@@ -86,6 +86,7 @@ export default class Misc {
             (a[2]*b[0]) - (b[2]*a[0]),
             (a[0]*b[1]) - (b[0]*a[1])
         ]
+
     }
 
     dot2(v) {
@@ -161,6 +162,34 @@ export default class Misc {
             let c = Azx*(x2-px) + Azy*(y2-py) + Azz*(z2-pz);
             return [a,b,c]
     }
+
+
+    coordsToIndex(x,y,width) {
+        return (y * width) - (width - x)
+    }
+
+
+    addVector2(a,b) {
+        return [
+            a[0]+b[0],
+            a[1]+b[1],
+        ]
+    }
+
+    subVector2(a,b) {
+        return [
+            a[0]-b[0],
+            a[1]-b[1],
+        ]
+    }
+
+    multVector2(v,s) {
+        return [
+            v[0]*s,
+            v[1]*s,
+        ]
+    }
+
 
 
 }
