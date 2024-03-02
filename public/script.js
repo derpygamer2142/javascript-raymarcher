@@ -64,7 +64,7 @@ async function fetchTextureFromPath(path,width,height) {
 let fov = 135
 let renderDist = 3000;
 let epsilon = 0.01
-let resolution = 16 // works best with a multiple of 2, or just 1
+let resolution = 6 // works best with a multiple of 2, or just 1
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
 let renderType = "normal" // none, normal, actual, diffuse. None is fastest, diffuse is slowest.
@@ -103,7 +103,11 @@ objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.8,128,epsilon)) // r
 objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.8,128,epsilon)) // front
 objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.8,128,epsilon)) // back
 objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.8,128,epsilon)) // ceiling
+objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.075,255,epsilon))
 
+objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.9,128,null))
+objects.push(new Sphere(-8,-(SIZE-5),12,5,79,60,8,0.4,128,null))
+objects.push(new Sphere(8,-(SIZE-5),12,5,255,0,0,0.9,128,null))
 
 
 //objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
