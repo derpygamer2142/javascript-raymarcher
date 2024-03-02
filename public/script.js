@@ -94,11 +94,21 @@ let output = await objReader.getData(model,0,-35,45,0,0,0,0.8,128,128,128,null,"
 console.log(output)
 
 
-let objects = output[1];
+let objects = []//output[1];
+const SIZE = 15 // debug
+const DIM = 0.5
+objects.push(new Box(0,SIZE+DIM,0,SIZE,DIM,SIZE,0,255,255,255,0.8,128,epsilon)) // floor
+objects.push(new Box(SIZE-DIM,0,0,DIM,SIZE,SIZE,0,0,255,0,0.8,128,epsilon)) // left
+objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.8,128,epsilon)) // right
+objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.8,128,epsilon)) // front
+objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.8,128,epsilon)) // back
+objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.8,128,epsilon)) // ceiling
+
+
 
 //objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
-//objects.push(new Sphere(0,-35,120,75,255,255,255,0.5,175,null))
-//objects.push(new Sphere(0,25,120,60,255,255,255,0.5,175,null))
+// objects.push(new Sphere(0,-35,120,75,255,255,255,0.5,175,null))
+// objects.push(new Sphere(0,25,120,60,255,255,255,0.5,175,null))
 // objects.push(new Sphere(-35,25,100,55,255,255,255,0.5,175,textureLibrary.duck))
 
 // objects.push(new Sphere(35,25,100,55,255,255,255,0.5,175,textureLibrary.overweight_duck)) // :trol:
@@ -117,7 +127,7 @@ let toRender = []
 // let camYDir = -75
 let camX = -.1 // it breaks when camX is 0. No clue why, not fixing it either.
 let camY = 0
-let camZ = 0
+let camZ = -13
 let camXDir = 0
 let camYDir = 0
 
@@ -293,4 +303,4 @@ async function renderAndUpdate() {
 }
 
 
-setInterval(renderAndUpdate,45)
+setInterval(renderAndUpdate,(1/60)*1000)
