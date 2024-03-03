@@ -86,7 +86,7 @@ const textureLibrary = {
     "overweight_duck": await fetchTextureFromPath("overweight duck",250,250),
     "missing2": await fetchTextureFromPath("missing2",750,750),
     "magestic_duck": await fetchTextureFromPath("magestic duck",250,250),
-    "angry_duck": await fetchTextureFromPath("angary duck",250,250),
+    "angry_duck": await fetchTextureFromPath("angary duck 2",905,905),
     "deer": await fetchTextureFromPath("deer",250,250),
     
 }
@@ -115,9 +115,9 @@ objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.1,128,epsilo
 objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.1,128,epsilon)) // ceiling
 objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.005,300,epsilon)) // light
 
-objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.5,128,textureLibrary.angary_duck))
+objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.005,128,textureLibrary.angry_duck))
 objects.push(new Sphere(-8,-(SIZE-5),12,5,79,60,8,0.005,128,textureLibrary.overweight_duck))
-objects.push(new Sphere(8,-(SIZE-5),12,5,255,0,0,0.2,128,textureLibrary.duck))
+objects.push(new Sphere(8,-(SIZE-5),12,5,255,0,0,0.005,128,textureLibrary.duck))
 
 
 // objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
@@ -139,9 +139,9 @@ let toRender = []
 // let camZ = 140
 // let camXDir = 20
 // let camYDir = -75
-let camX = -.1 // it breaks when camX is 0. No clue why, not fixing it either.
-let camY = 5
-let camZ = -13
+let camX = 0 // it breaks when camX is 0. No clue why, not fixing it either.
+let camY = 0
+let camZ = 0
 let camXDir = 0
 let camYDir = 0
 
@@ -343,7 +343,7 @@ async function renderAndUpdate() {
     let renderTime = Date.now() - oldTime
     ctx.fillStyle = "black"
     ctx.font = "30px Comic Sans MS"
-    //printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
+    printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)
