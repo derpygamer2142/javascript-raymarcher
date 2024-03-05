@@ -78,10 +78,16 @@ export default class Triangle {
     }
 
     normalTo(x,y,z) {
-        let nx = this.dist(x+this.epsilon,y,z) - this.dist(x-this.epsilon,y,z)
-        let ny = this.dist(x,y+this.epsilon,z) - this.dist(x,y-this.epsilon,z)
-        let nz = this.dist(x,y,z+this.epsilon) - this.dist(x,y,z-this.epsilon)
-        return this.misc.normalize(nx,ny,nz)
+        let heldv = this.misc.vectorBetween(x,y,z,this.x,this.y,this.z)
+        let heldP = this.misc.dotProduct(heldv,this.normal)
+        if (heldP < 0) {
+            return [
+                this.normal[0]*-1,
+                this.normal[1]*-1,
+                this.normal[2]*-1
+            ]
+        }
+        return this.normal
     }
 
     colorAt(x,y,z,rayDir,rayOrigin) {
