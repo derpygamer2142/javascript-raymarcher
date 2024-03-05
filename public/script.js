@@ -78,7 +78,7 @@ let ly = 105
 let lz = -100
 let lr = 15
 let bfc = false // bfc is broken af
-const maxReflections = 4
+const maxReflections = 1
 
 const textureLibrary = {
     "duck": await fetchTextureFromPath("duck",250,250),
@@ -95,30 +95,30 @@ const textureLibrary = {
 const misc = new Misc()
 const input = new Input()
 const objReader = new objectParser(epsilon)
-// let e = await fetch("./models/3dmm models/Rocket/rocket.obj")
-// let model = await e.text()
+let e = await fetch("./models/crazy.obj")
+let model = await e.text()
 
-// let output = await objReader.getData(model,0,-5,0,0,0,0,3,128,128,128,null,"./models/3dmm models/Rocket/", true, {
-//     "ns": 0.5
-// })
-// console.log(output)
+let output = await objReader.getData(model,0,0,0,0,0,0,10,128,128,128,null,"./models/", true, {
+    "ns": 0.5
+})
+console.log(output)
 
 
-let objects = []//output[1];
-const SIZE = 15 // debug
-const DIM = 0.5
-objects.push(new Box(0,SIZE+DIM,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // floor
-objects.push(new Box(SIZE-DIM,0,0,DIM,SIZE,SIZE,0,0,255,0,0.25,128,epsilon)) // right
-objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.215,128,epsilon)) // left?
-objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // front
-objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // back
-objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // ceiling
-objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.005,300,epsilon)) // light
+let objects = output[1];
+// const SIZE = 15 // debug
+// const DIM = 0.5
+// objects.push(new Box(0,SIZE+DIM,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // floor
+// objects.push(new Box(SIZE-DIM,0,0,DIM,SIZE,SIZE,0,0,255,0,0.25,128,epsilon)) // right
+// objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.215,128,epsilon)) // left?
+// objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // front
+// objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // back
+// objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // ceiling
+// objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.005,300,epsilon)) // light
 
 // objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.3,128,null))
 // objects.push(new Sphere(-8,-(SIZE-5),12,5,79,60,8,0.015,128,null))
 // objects.push(new Sphere(8,-(SIZE-5),12,5,255,0,0,0.2,128,null))
-objects.push(new Triangle([-3,-3,0],[0,3,0],[3,-3,0],128,128,128,0.1,128,epsilon,null,[0,0],[0.5,1],[1,0]))
+// objects.push(new Triangle([-3,-3,0],[0,3,0],[3,-3,0],128,128,128,0.1,128,epsilon,null,[0,0],[0.5,1],[1,0]))
 
 
 // objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
@@ -140,11 +140,11 @@ let toRender = []
 // let camZ = 140
 // let camXDir = 20
 // let camYDir = -75
-let camX = 0 // it breaks when camX is 0. No clue why, not fixing it either.
-let camY = 0
-let camZ = -12
-let camXDir = 0
-let camYDir = 0
+let camX = 1.5 // it breaks when camX is 0. No clue why, not fixing it either.
+let camY = -7
+let camZ = 2.5
+let camXDir = 35
+let camYDir = -157
 
 let focalLength = (WIDTH/2)/Math.tan(misc.toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 let deltaTime = 0
@@ -217,18 +217,20 @@ function raymarchPixel(x,y) {
 
             let contactNormal = contactObject.normalTo(rx,ry,rz)
 
-            // let lv = misc.vectorBetween(lx,ly,lz,contactObject.x,contactObject.y,contactObject.z) // get the normal from the object's center to the light
-            // let lightingVal = misc.dotProduct(contactNormal,misc.normalize(lv[0],lv[1],lv[2]))
-            // // let ld = misc.dist(rx,ry,rz,lx,ly,lz)
-            // // // ld -= lr
-            // // lightingVal /= (ld * ld)
-            
-            // lightingVal *= 25
+            if (maxReflections == 1) {
+                let lv = misc.vectorBetween(lx,ly,lz,contactObject.x,contactObject.y,contactObject.z) // get the normal from the object's center to the light
+                let lightingVal = misc.dotProduct(contactNormal,misc.normalize(lv[0],lv[1],lv[2]))
+                // let ld = misc.dist(rx,ry,rz,lx,ly,lz)
+                // // ld -= lr
+                // lightingVal /= (ld * ld)
+                
+                lightingVal *= 45
 
 
-            // r += lightingVal+25
-            // g += lightingVal+25
-            // b += lightingVal+25
+                r += lightingVal
+                g += lightingVal
+                b += lightingVal
+            }
             
             pr += r*heldReflectionWeight*(contactObject.brightness/128)
             pg += g*heldReflectionWeight*(contactObject.brightness/128)
