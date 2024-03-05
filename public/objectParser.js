@@ -90,9 +90,15 @@ export default class objectParser {
                     if (overrideTexture){
                         if (textureLibrary[ls[0]].hasOwnProperty("texture")){
                             currentTexture = textureLibrary[ls[0]]["texture"]
+                            /* if the texture library refrenced by the first argument
+                            has a texture value, set the current texture to that texture.
+                            */
+                        }
+                        if (textureLibrary[ls[0]].hasOwnProperty("kd")){
+                            [r,g,b] = textureLibrary[ls[0]]["kd"]
                         }
 
-                        [r,g,b] = textureLibrary[ls[0]]["kd"]
+                        
                         r *= 255
                         g *= 255
                         b *= 255
