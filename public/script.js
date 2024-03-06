@@ -33,7 +33,7 @@ function clamp(n,a,b) {
 function printLines(text,x,y,size) {
     text.reverse()
     ctx.font = `${size}px Comic Sans MS`
-    ctx.fillStyle = "black"
+    ctx.fillStyle = "white"
     for (let i = 0;i < text.length; i++) {
         ctx.fillText(text[i],x,y-(i*(size*1.03)))
     }
@@ -69,16 +69,15 @@ async function fetchTextureFromPath(path,width,height) {
 let fov = 135
 let renderDist = 4500;
 let epsilon = 0.01
-let resolution = 1 // works best with a power of 2, or just 1
+let resolution = 3 // works best with a power of 2, or just 1
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
-let renderType = "normal" // none, normal, actual, diffuse. None is fastest, diffuse is slowest.
 let lx = 0
 let ly = 105
 let lz = -100
 let lr = 15
 let bfc = false // bfc is broken af
-const maxReflections = 1
+const maxReflections = 4
 
 const textureLibrary = {
     "duck": await fetchTextureFromPath("duck",250,250),
@@ -99,21 +98,21 @@ let e = await fetch("./models/crazy.obj")
 let model = await e.text()
 
 let output = await objReader.getData(model,0,0,0,0,0,0,10,128,128,128,null,"./models/", true, {
-    "ns": 0.5
+    "ns": 0.015
 })
 console.log(output)
 
 
 let objects = output[1];
-// const SIZE = 15 // debug
-// const DIM = 0.5
+const SIZE = 15 // debug
+const DIM = 0.5
 // objects.push(new Box(0,SIZE+DIM,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // floor
 // objects.push(new Box(SIZE-DIM,0,0,DIM,SIZE,SIZE,0,0,255,0,0.25,128,epsilon)) // right
 // objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.215,128,epsilon)) // left?
 // objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // front
 // objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // back
 // objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // ceiling
-// objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.005,300,epsilon)) // light
+objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.005,300,epsilon)) // light
 
 // objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.3,128,null))
 // objects.push(new Sphere(-8,-(SIZE-5),12,5,79,60,8,0.015,128,null))
@@ -162,6 +161,7 @@ function raymarchPixel(x,y) {
     let rx = camX;
     let ry = camY;
     let rz = camZ;
+    let [ox, oy, oz] = [camX, camY, camZ] // ray origin, used by the triangle texture mapper
     let xv = toOriginX(x)
     let yv = toOriginY(y)
     let zv = focalLength
@@ -206,7 +206,11 @@ function raymarchPixel(x,y) {
             // pr = contactObject.r
             // pg = contactObject.g
             // pb = contactObject.b
-            let objRGB = contactObject.colorAt(rx,ry,rz,[xv,yv,zv],[camX,camY,camZ])
+            let objRGB = contactObject.colorAt(rx,ry,rz,[xv,yv,zv],[ox, oy, oz])
+
+            ox = rx
+            oy = ry
+            oz = rz
             //console.log(contactObject)
             //console.log(objRGB)
             let [r,g,b] = [0,0,0]
@@ -252,9 +256,9 @@ function raymarchPixel(x,y) {
             xv = heldReflected[0]
             yv = heldReflected[1]
             zv = heldReflected[2]
-            rx += xv
-            ry += yv
-            rz += zv
+            rx += xv*epsilon*2
+            ry += yv*epsilon*2
+            rz += zv*epsilon*2
             //console.log(contactObject.dist(rx,ry,rz) < epsilon)
             //console.log(heldReflectionWeight)
             //console.log(contactObject.reflectiveness)
@@ -265,7 +269,7 @@ function raymarchPixel(x,y) {
     // pg = misc.interpolate(g,bg,rayLength/renderDist)
     // pb = misc.interpolate(b,bb,rayLength/renderDist)
     // return rgb values
-    if ((rayLength > renderDist)) {
+    if ((rayLength > renderDist) && (misc.dist(camX,camY,camZ,rx,ry,rz) > (renderDist/2))) {
         pr += br*heldReflectionWeight
         pg += bg*heldReflectionWeight
         pb += bb*heldReflectionWeight
@@ -343,9 +347,7 @@ async function renderAndUpdate() {
 
     let fps = 1/deltaTime
     let renderTime = Date.now() - oldTime
-    ctx.fillStyle = "black"
-    ctx.font = "30px Comic Sans MS"
-    //printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
+    printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)
@@ -353,5 +355,5 @@ async function renderAndUpdate() {
 }
 
 
-setInterval(renderAndUpdate,(1/60)*1000)
-//renderAndUpdate()
+//setInterval(renderAndUpdate,(1/60)*1000)
+renderAndUpdate()

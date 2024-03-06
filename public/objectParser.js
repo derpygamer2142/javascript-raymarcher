@@ -148,14 +148,16 @@ export default class objectParser {
                     case "Kd":
                         // add the kd
                         library[splitTextureFile[0]]["kd"] = [args[0],args[1],args[2]]
+                        break;
                     case "Ns":
-                        //library[splitTextureFile[0]]["ns"] = args[0] // i have no clue what this one is
+                        library[splitTextureFile[0]]["ks"] = (+ args[0])/2500 // i have no clue what this one is
+                        console.log((+ args[0])/2500)
                         break;
                     case "Ks":
-                        args[0] = + args[0]
-                        args[1] = + args[1]
-                        args[2] = + args[2]
-                        library[splitTextureFile[0]]["ks"] = (args[0] + args[1] + args[2])/3
+                        // args[0] = + args[0]
+                        // args[1] = + args[1]
+                        // args[2] = + args[2]
+                        // library[splitTextureFile[0]]["ks"] = (args[0] + args[1] + args[2])/3
                         break;
 
                 }
