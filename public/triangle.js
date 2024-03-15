@@ -133,9 +133,11 @@ export default class Triangle {
                     v
                 )
             )
+            //console.log(uv)
             uv[0] = this.misc.constrain(uv[0],0,1)
             uv[1] = this.misc.constrain(uv[1],0,1) // quick fix, hopefully temporary
-            return this.texture.colorAt(uv[0],1-uv[1])
+            let heldTexture = this.texture.colorAt(uv[0],1-uv[1])
+            return heldTexture
 
         }
         return [0,0,0]

@@ -94,17 +94,11 @@ export default class Misc {
     }
 
     min(a,b) {
-        if (a<b){
-            return a
-        }
-        return b
+        return Math.min(a,b) // forgot these functions exist lol
     }
 
     max(a,b) {
-        if (a<b){
-            return b
-        }
-        return a
+        return Math.max(a,b)
     }
     
 

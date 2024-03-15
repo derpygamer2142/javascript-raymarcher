@@ -69,7 +69,7 @@ async function fetchTextureFromPath(path,width,height) {
 let fov = 135
 let renderDist = 4500;
 let epsilon = 0.01
-let resolution = 3 // works best with a power of 2, or just 1
+let resolution = 8 // works best with a power of 2, or just 1
 let speed = 25
 let [br,bg,bb] = [7, 237, 218]
 let lx = 0
@@ -77,7 +77,7 @@ let ly = 105
 let lz = -100
 let lr = 15
 let bfc = false // bfc is broken af
-const maxReflections = 4
+const maxReflections = 3
 
 const textureLibrary = {
     "duck": await fetchTextureFromPath("duck",250,250),
@@ -103,21 +103,21 @@ let output = await objReader.getData(model,0,0,0,0,0,0,10,128,128,128,null,"./mo
 console.log(output)
 
 
-let objects = output[1];
+let objects = []//output[1];
 const SIZE = 15 // debug
 const DIM = 0.5
-// objects.push(new Box(0,SIZE+DIM,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // floor
-// objects.push(new Box(SIZE-DIM,0,0,DIM,SIZE,SIZE,0,0,255,0,0.25,128,epsilon)) // right
-// objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.215,128,epsilon)) // left?
-// objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // front
-// objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.35,128,epsilon)) // back
-// objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // ceiling
+objects.push(new Box(0,SIZE+DIM,0,SIZE,DIM,SIZE,0,255,255,255,0.25,128,epsilon)) // floor
+objects.push(new Box(SIZE-DIM,0,0,DIM,SIZE,SIZE,0,0,255,0,0.05,128,epsilon)) // right
+objects.push(new Box(DIM-SIZE,0,0,DIM,SIZE,SIZE,0,255,0,0,0.05,128,epsilon)) // left?
+objects.push(new Box(0,0,SIZE-DIM,SIZE-DIM,SIZE,DIM,0,255,255,255,0.25,128,epsilon)) // front
+objects.push(new Box(0,0,DIM-SIZE,SIZE-DIM,SIZE,DIM,0,255,255,255,0.25,128,epsilon)) // back
+objects.push(new Box(0,DIM-SIZE,0,SIZE,DIM,SIZE,0,255,255,255,0.35,128,epsilon)) // ceiling
 objects.push(new Box(0,-(SIZE+DIM),0,7,2,2,2,255,255,255,0.005,300,epsilon)) // light
 
-// objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.3,128,null))
-// objects.push(new Sphere(-8,-(SIZE-5),12,5,79,60,8,0.015,128,null))
-// objects.push(new Sphere(8,-(SIZE-5),12,5,255,0,0,0.2,128,null))
-// objects.push(new Triangle([-3,-3,0],[0,3,0],[3,-3,0],128,128,128,0.1,128,epsilon,null,[0,0],[0.5,1],[1,0]))
+objects.push(new Sphere(0,-(SIZE-5),5,5,255,255,255,0.3,128,null))
+objects.push(new Sphere(-8,-(SIZE-5),12,5,79,60,8,0.015,128,null))
+objects.push(new Sphere(8,-(SIZE-5),12,5,255,0,0,0.2,128,null))
+objects.push(new Triangle([-3,-3,0],[0,3,0],[3,-3,0],128,128,128,0.1,128,epsilon,null,[0,0],[0.5,1],[1,0]))
 
 
 // objects.push(new Sphere(0,0,85,65,0,0,0,0.5,175,heldTexture))
@@ -139,11 +139,11 @@ let toRender = []
 // let camZ = 140
 // let camXDir = 20
 // let camYDir = -75
-let camX = 1.5 // it breaks when camX is 0. No clue why, not fixing it either.
-let camY = -7
-let camZ = 2.5
-let camXDir = 35
-let camYDir = -157
+let camX = 0 // it breaks when camX is 0. No clue why, not fixing it either.
+let camY = 0
+let camZ = -8
+let camXDir = 15
+let camYDir = 0
 
 let focalLength = (WIDTH/2)/Math.tan(misc.toRad(fov/2)) // convert FOV to focal length, as that's what the other formulas use. FOV is more human readable tho
 let deltaTime = 0
@@ -347,7 +347,7 @@ async function renderAndUpdate() {
 
     let fps = 1/deltaTime
     let renderTime = Date.now() - oldTime
-    printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
+    //printLines([`Render load: ${toRender.length} shapes`,`Resolution: ${resolution}`,`Render time: ${renderTime} milliseconds`,`FPS: ${fps.toFixed(3)}`,`DeltaTime: ${deltaTime}`,`Pos: ${camX.toFixed(3)},${camY.toFixed(3)},${camZ.toFixed(3)}`,`Rot: ${camYDir}, ${camXDir}`],0,HEIGHT*0.98,30)
     // ctx.fillText(`Rendered in ${renderTime} milliseconds`,0,HEIGHT*0.9)
     // ctx.fillText(`FPS: ${fps.toFixed(3)}`,0,HEIGHT*0.94)
     // ctx.fillText(`DeltaTime: ${deltaTime}`,0,HEIGHT*0.98)
@@ -355,5 +355,5 @@ async function renderAndUpdate() {
 }
 
 
-//setInterval(renderAndUpdate,(1/60)*1000)
-renderAndUpdate()
+setInterval(renderAndUpdate,(1/60)*1000)
+//await renderAndUpdate()
