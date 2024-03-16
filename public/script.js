@@ -78,6 +78,7 @@ let lz = -100
 let lr = 15
 let bfc = false // bfc is broken af
 const maxReflections = 3
+const samples = 25
 
 const textureLibrary = {
     "duck": await fetchTextureFromPath("duck",250,250),
