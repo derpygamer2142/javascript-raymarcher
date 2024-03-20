@@ -186,4 +186,15 @@ export default class Misc {
 
 
 
+    hemisphere(u1, u2) {
+        // taken from https://www.rorydriscoll.com/2009/01/07/better-sampling/
+
+        const r = Math.sqrt(u1)
+        const theta = 2 * Math.PI * u2
+
+        const x = r * Math.cos(theta)
+        const y = r * Math.sin(theta)
+
+        return [x , y, Math.sqrt(Math.max(0, 1 - u1))]
+    }
 }
